@@ -1,6 +1,7 @@
 plugins {
     id("build-jvm")
     alias(libs.plugins.openapi.generator)
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 sourceSets {
@@ -38,7 +39,7 @@ openApiGenerate {
         mapOf(
             "dateLibrary" to "string",
             "enumPropertyNaming" to "UPPERCASE",
-            "serializationLibrary" to "jackson",
+            "serializationLibrary" to "kotlinx_serialization",
             "collectionType" to "list"
         )
     )
@@ -46,8 +47,9 @@ openApiGenerate {
 
 dependencies {
     implementation(kotlin("stdlib"))
-    implementation(libs.jackson.kotlin)
-    implementation(libs.jackson.datatype)
+    implementation(libs.kotlin.serialization)
+    implementation(libs.kotlinx.serialization.core)
+    implementation(libs.kotlinx.serialization.json)
     testImplementation(kotlin("test-junit"))
 }
 

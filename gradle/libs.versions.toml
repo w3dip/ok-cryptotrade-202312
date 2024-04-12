@@ -1,24 +1,26 @@
 [versions]
-kotlin = "1.9.22"
+kotlin = "1.9.23"
 
 kotlinx-datetime = "0.5.0"
 kotlinx-serialization = "1.6.3"
+kotlin-serialization = "1.8.21"
 coroutines = "1.8.0"
 
 binaryCompabilityValidator = "0.13.2"
 
-openapi-generator = "7.3.0"
+openapi-generator = "6.5.0"
 jackson = "2.16.1"
 
 logback = "1.5.3"
 kotest = "5.8.0"
 kermit = "2.0.3"
 
-#Frameworks
+# Frameworks
 ktor = "2.3.9"
 
-#Testing
+# Docker
 testcontainers = "1.19.7"
+muschko = "9.4.0"
 
 # BASE
 jvm-compiler = "17"
@@ -28,6 +30,7 @@ jvm-language = "17"
 plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 plugin-binaryCompatibilityValidator = { module = "org.jetbrains.kotlinx:binary-compatibility-validator", version.ref = "binaryCompabilityValidator" }
 kotlinx-datetime = {module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime"}
+kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin-serialization" }
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinx-serialization" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
@@ -41,10 +44,39 @@ logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 
 # Ktor
+ktor-server-core = { module = "io.ktor:ktor-server-core-jvm" }
+ktor-server-negotiation = { module = "io.ktor:ktor-server-content-negotiation-jvm" }
+ktor-serialization-json = { module = "io.ktor:ktor-serialization-kotlinx-json-jvm" }
+ktor-server-netty = { module = "io.ktor:ktor-server-netty-jvm" }
+ktor-server-tests = { module = "io.ktor:ktor-server-tests-jvm" }
+ktor-server-yaml = { module = "io.ktor:ktor-server-config-yaml" }
+ktor-server-cors = { module = "io.ktor:ktor-server-cors-jvm" }
+
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 
+#ktor-network = { module = "io.ktor:ktor-network", version.ref = "ktor" }
+#ktor-serialization-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+#ktor-serialization-jackson = { module = "io.ktor:ktor-serialization-jackson", version.ref = "ktor" }
+#ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+#ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+#ktor-client-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+#ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktor" }
+#ktor-server-headers-response = { module = "io.ktor:ktor-server-auto-head-response", version.ref = "ktor" }
+#ktor-server-headers-caching = { module = "io.ktor:ktor-server-caching-headers", version.ref = "ktor" }
+#ktor-server-headers-default = { module = "io.ktor:ktor-server-default-headers", version.ref = "ktor" }
+#ktor-server-cors = { module = "io.ktor:ktor-server-cors", version.ref = "ktor" }
+#ktor-server-yaml = { module = "io.ktor:ktor-server-config-yaml", version.ref = "ktor" }
+#ktor-server-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
+#ktor-server-calllogging = { module = "io.ktor:ktor-server-call-logging", version.ref = "ktor" }
+#ktor-server-test = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
+
+# Message Queues
+kafka-client = { module = "org.apache.kafka:kafka-clients", version = "3.7.0" }
+
 # Testing
+kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
+
 kotest-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 kotest-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
 kotest-datatest = { module = "io.kotest:kotest-framework-datatest", version.ref = "kotest" }
@@ -60,3 +92,11 @@ kotlin-multiplatform = {id = "org.jetbrains.kotlin.multiplatform", version.ref =
 kotlin-jvm = {id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin"}
 openapi-generator = { id = "org.openapi.generator", version.ref = "openapi-generator" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+shadowJar = { id = "com.github.johnrengelman.shadow", version = "8.1.1" }
+
+# Ktor
+ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
+
+# Docker
+muschko-remote = { id = "com.bmuschko.docker-remote-api", version.ref = "muschko" }
+muschko-java = { id = "com.bmuschko.docker-java-application", version.ref = "muschko" }

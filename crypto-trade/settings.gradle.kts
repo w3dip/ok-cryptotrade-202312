@@ -22,5 +22,7 @@ pluginManagement {
 
 include(":common")
 include(":api-v1")
+include(":core")
 include(":app")
 include(":mappers")
+include(":stubs")
