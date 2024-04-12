@@ -1,0 +1,27 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/v1/order/create"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "responseType": "create",
+      "result": "success",
+      "order": {
+        "id": "123",
+        "secCode": "{{{jsonPath request.body '$.order.secCode'}}}",
+        "agreementNumber": "{{{jsonPath request.body '$.order.agreementNumber'}}}",
+        "quantity": "{{{jsonPath request.body '$.order.quantity'}}}",
+        "price": "{{{jsonPath request.body '$.order.price'}}}",
+        "operationType": "{{{jsonPath request.body '$.order.operationType'}}}"
+      }
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "transformers": [
+      "response-template"
+    ]
+  }
+}

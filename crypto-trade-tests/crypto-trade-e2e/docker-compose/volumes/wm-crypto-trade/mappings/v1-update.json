@@ -1,0 +1,24 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/v1/order/update"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "responseType": "update",
+      "result": "success",
+      "order": {
+        "id": "123",
+        "secCode": "BTC",
+        "agreementNumber": "A001",
+        "quantity": "5",
+        "price": "65000",
+        "operationType": "buy"
+      }
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

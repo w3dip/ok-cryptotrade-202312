@@ -7,5 +7,8 @@ version = rootProject.version
 
 dependencies {
     implementation(kotlin("stdlib"))
-    api(libs.kotlinx.datetime)
+    implementation(project(":api-v1"))
+    implementation(project(":common"))
+
+    testImplementation(kotlin("test-junit"))
 }

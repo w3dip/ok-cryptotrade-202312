@@ -3,12 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform) apply false
 }
 
-group = "ru.otus.otuskotlin.crypto.trade"
+group = "ru.otus.otuskotlin.crypto.trade.tests"
 version = "1.0.0"
-
-repositories {
-    mavenCentral()
-}
 
 allprojects {
     repositories {
@@ -27,17 +23,10 @@ ext {
 }
 
 tasks {
-    create("build") {
-        group = "build"
-        dependsOn(project(":app").getTasksByName("build", false))
-    }
-    create("check") {
-        group = "verification"
-        subprojects.forEach { proj ->
-            println("PROJ $proj")
-            proj.getTasksByName("check", false).also {
-                this@create.dependsOn(it)
-            }
+    arrayOf("build", "clean", "check").forEach { tsk ->
+        create(tsk) {
+            group = "build"
+            dependsOn(subprojects.map { it.getTasksByName(tsk, false) })
         }
     }
 }

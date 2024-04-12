@@ -1,0 +1,27 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/v1/order/delete"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "responseType": "delete",
+      "result": "success",
+      "order": {
+        "id": "{{{jsonPath request.body '$.order.id'}}}",
+        "secCode": "BTC",
+        "agreementNumber": "A001",
+        "quantity": "5",
+        "price": "65000",
+        "operationType": "buy"
+      }
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "transformers": [
+      "response-template"
+    ]
+  }
+}

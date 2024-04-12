@@ -1,0 +1,31 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/v1/order/search",
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": "$.orderFilter[?(@.searchString == 'ETH')]"
+      }
+    ]
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "responseType": "search",
+      "result": "success",
+      "orders": [
+        {
+          "id": "124",
+          "secCode": "ETH",
+          "agreementNumber": "A001",
+          "quantity": "3",
+          "price": "3000",
+          "operationType": "buy"
+        }
+      ]
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

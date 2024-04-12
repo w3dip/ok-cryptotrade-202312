@@ -1,4 +1,4 @@
-rootProject.name = "crypto-trade"
+rootProject.name = "crypto-trade-tests"
 
 dependencyResolutionManagement {
     versionCatalogs {
@@ -20,7 +20,4 @@ pluginManagement {
     }
 }
 
-include(":common")
-include(":api-v1")
-include(":app")
-include(":mappers")
+include(":crypto-trade-e2e")

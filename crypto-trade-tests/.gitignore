@@ -1,0 +1,7 @@
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!crypto-trade-e2e/src/main/**/build/
+!crypto-trade-e2e/src/test/**/build/
+
+/.idea/
