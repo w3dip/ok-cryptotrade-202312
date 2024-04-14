@@ -1,10 +1,8 @@
-package rest.order.v1
+package ru.otus.otuskotlin.crypto.trade.app.common
 
 import CorSettings
 import kotlinx.coroutines.test.runTest
 import ru.otus.otuskotlin.crypto.trade.api.v1.models.*
-import ru.otus.otuskotlin.crypto.trade.app.AppSettings
-import ru.otus.otuskotlin.crypto.trade.app.rest.order.v1.controllerHelper
 import ru.otus.otuskotlin.crypto.trade.core.OrderProcessor
 import ru.otus.otuskotlin.crypto.trade.mappers.fromTransport
 import ru.otus.otuskotlin.crypto.trade.mappers.toTransportOrder
@@ -12,7 +10,7 @@ import java.math.BigDecimal
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class OrderControllerExtTest {
+class ControllerHelperTest {
 
     private val request = OrderCreateRequest(
         order = OrderCreateObject(
@@ -25,8 +23,11 @@ class OrderControllerExtTest {
         debug = OrderDebug(mode = OrderRequestDebugMode.STUB, stub = OrderRequestDebugStubs.SUCCESS)
     )
 
-    private val corSettings = CorSettings()
-    private val appSettings = AppSettings(emptyList(), corSettings, OrderProcessor(corSettings))
+
+    private val appSettings: CommonAppSettings = object : CommonAppSettings {
+        override val corSettings: CorSettings = CorSettings()
+        override val processor: OrderProcessor = OrderProcessor(corSettings)
+    }
 
     class TestApplicationCall(private val request: IRequest) {
         var res: IResponse? = null
@@ -38,12 +39,12 @@ class OrderControllerExtTest {
         }
     }
 
-    private suspend fun TestApplicationCall.createOrder(appSettings: AppSettings) {
+    private suspend fun TestApplicationCall.createOrder(appSettings: CommonAppSettings) {
         respond(
             appSettings.controllerHelper(
                 { fromTransport(receive<OrderCreateRequest>()) },
                 { toTransportOrder() },
-                OrderControllerExtTest::class,
+                ControllerHelperTest::class,
                 "controller-v1-test"
             )
         )

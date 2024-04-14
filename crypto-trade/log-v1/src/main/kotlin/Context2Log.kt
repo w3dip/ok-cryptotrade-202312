@@ -14,8 +14,6 @@ fun OrderContext.toLog(logId: String) = CommonLogModel(
     errors = errors.map { it.toLog() },
 )
 
-val orderContext = OrderContext().toLog("123")
-
 private fun OrderContext.toOrderLog(): OrderLogModel? {
     val orderNone = Order()
     return OrderLogModel(

@@ -1,8 +1,6 @@
 plugins {
     alias(libs.plugins.kotlin.jvm) apply false
     alias(libs.plugins.kotlin.multiplatform) apply false
-    alias(libs.plugins.muschko.remote) apply false
-    alias(libs.plugins.muschko.java) apply false
 }
 
 group = "ru.otus.otuskotlin.crypto.trade"
@@ -32,7 +30,7 @@ ext {
 tasks {
     create("build") {
         group = "build"
-        dependsOn(project(":app").getTasksByName("build", false))
+        dependsOn(project(":app-ktor").getTasksByName("build", false))
     }
     create("check") {
         group = "verification"

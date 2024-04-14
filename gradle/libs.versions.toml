@@ -32,6 +32,7 @@ jvm-language = "17"
 plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 plugin-binaryCompatibilityValidator = { module = "org.jetbrains.kotlinx:binary-compatibility-validator", version.ref = "binaryCompabilityValidator" }
 kotlinx-datetime = {module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime"}
+kotlinx-atomicfu = { module = "org.jetbrains.kotlinx:atomicfu", version = "0.23.2" }
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinx-serialization" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
@@ -65,22 +66,6 @@ ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-negotiation = { module = "io.ktor:ktor-client-content-negotiation" }
 
-#ktor-network = { module = "io.ktor:ktor-network", version.ref = "ktor" }
-#ktor-serialization-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
-#ktor-serialization-jackson = { module = "io.ktor:ktor-serialization-jackson", version.ref = "ktor" }
-#ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
-#ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
-#ktor-client-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
-#ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktor" }
-#ktor-server-headers-response = { module = "io.ktor:ktor-server-auto-head-response", version.ref = "ktor" }
-#ktor-server-headers-caching = { module = "io.ktor:ktor-server-caching-headers", version.ref = "ktor" }
-#ktor-server-headers-default = { module = "io.ktor:ktor-server-default-headers", version.ref = "ktor" }
-#ktor-server-cors = { module = "io.ktor:ktor-server-cors", version.ref = "ktor" }
-#ktor-server-yaml = { module = "io.ktor:ktor-server-config-yaml", version.ref = "ktor" }
-#ktor-server-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
-#ktor-server-calllogging = { module = "io.ktor:ktor-server-call-logging", version.ref = "ktor" }
-#ktor-server-test = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
-
 # Message Queues
 kafka-client = { module = "org.apache.kafka:kafka-clients", version = "3.7.0" }
 
@@ -108,5 +93,4 @@ shadowJar = { id = "com.github.johnrengelman.shadow", version = "8.1.1" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
 
 # Docker
-muschko-remote = { id = "com.bmuschko.docker-remote-api", version.ref = "muschko" }
 muschko-java = { id = "com.bmuschko.docker-java-application", version.ref = "muschko" }

@@ -12,6 +12,9 @@ class OrderProcessor(val corSettings: CorSettings) {
             if (ctx.orderRequest.id != OrderId.NONE) {
                 this.id = ctx.orderRequest.id
             }
+            if (ctx.orderRequest.secCode != "") {
+                this.secCode = ctx.orderRequest.secCode
+            }
         }
         ctx.ordersResponse = OrderStub.prepareResultList().toMutableList()
         ctx.state = OrderState.RUNNING
