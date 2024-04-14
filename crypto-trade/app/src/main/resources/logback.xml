@@ -1,3 +1,4 @@
+<!--
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration>
 <configuration scan="true" scanPeriod="30 seconds" debug="false">
@@ -5,8 +6,8 @@
     <property name="LOGS_FB_HOSTS" value="${LOGS_FB_HOSTS:-127.0.0.1}"/>
     <property name="LOGS_FB_PORT" value="${LOGS_FB_PORT:-24224}"/>
     <property name="SERVICE_NAME" value="${SERVICE_NAME:-ok_cryptotrade}"/>
-    <property name="LOG_OTUS_LEVEL" value="${LOG_OTUS_LEVEL:-info}"/>
-    <property name="LOG_COMMON_LEVEL" value="${LOG_COMMON_LEVEL:-error}"/>
+    <property name="LOG_OTUS_LEVEL" value="${LOG_OTUS_LEVEL:-INFO}"/>
+    <property name="LOG_COMMON_LEVEL" value="${LOG_COMMON_LEVEL:-ERROR}"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -14,7 +15,7 @@
         </encoder>
     </appender>
 
-    <!--<appender name="fluentd" class="ch.qos.logback.more.appenders.DataFluentAppender">
+    &lt;!&ndash;<appender name="fluentd" class="ch.qos.logback.more.appenders.DataFluentAppender">
         <tag>app.logs</tag>
         <label>normal</label>
         <remoteHost>${LOGS_FB_HOSTS}</remoteHost>
@@ -47,10 +48,10 @@
                 <tags/>
             </providers>
         </encoder>
-    </appender>-->
+    </appender>&ndash;&gt;
 
     <logger name="ru.otus" level="${LOG_OTUS_LEVEL}" additivity="false">
-        <!--<appender-ref ref="fluentd"/>-->
+        &lt;!&ndash;<appender-ref ref="fluentd"/>&ndash;&gt;
         <appender-ref ref="STDOUT"/>
     </logger>
 
@@ -59,7 +60,20 @@
     </logger>
 
     <root level="${LOG_COMMON_LEVEL}">
-        <!--<appender-ref ref="fluentd"/>-->
+        &lt;!&ndash;<appender-ref ref="fluentd"/>&ndash;&gt;
         <appender-ref ref="STDOUT"/>
     </root>
+</configuration>
+-->
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{YYYY-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT"/>
+    </root>
+    <logger name="org.eclipse.jetty" level="ERROR"/>
+    <logger name="io.netty" level="ERROR"/>
 </configuration>

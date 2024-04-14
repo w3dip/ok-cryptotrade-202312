@@ -30,15 +30,9 @@ object OrderStub {
 
     fun prepareResult(block: Order.() -> Unit): Order = get().apply(block)
 
-    fun prepareResultList() = (1..10).map { orderBuy(randomUUID()) }
+    fun prepareResultList() = (1..10).map { orderBuy() }
 
-    private fun orderBuy(id: String) =
-        order(ORDER_BUY, id = id)
+    private fun orderBuy() = ORDER_BUY.copy()
 
-    private fun orderSell(id: String) =
-        order(ORDER_SELL, id = id)
-
-    private fun order(base: Order, id: String) = base.copy(
-        id = OrderId(id)
-    )
+    private fun orderSell() = ORDER_SELL.copy()
 }

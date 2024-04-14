@@ -8,4 +8,4 @@ ktor:
     application:
         modules:
             - ru.otus.otuskotlin.crypto.trade.app.ApplicationKt.module
-#    logger: logback
+    logger: logback

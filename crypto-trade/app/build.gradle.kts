@@ -38,7 +38,9 @@ dependencies {
     implementation(libs.logback)
 
     testImplementation(libs.ktor.server.tests)
+    testImplementation(libs.ktor.client.negotiation)
     testImplementation(libs.kotlin.test.junit)
+    testImplementation(libs.coroutines.test)
 
     implementation(project(":common"))
     implementation(project(":api-v1"))
