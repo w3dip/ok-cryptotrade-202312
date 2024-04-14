@@ -57,7 +57,7 @@ services:
       - app-tier
 
   app-kafka:
-    image: ok-crypto-trade-app-kafka:latest
+    image: ok-cryptotrade-app-kafka:latest
     depends_on:
       kafka:
         condition: service_healthy

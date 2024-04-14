@@ -1,4 +1,3 @@
-<!--
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration>
 <configuration scan="true" scanPeriod="30 seconds" debug="false">
@@ -15,7 +14,7 @@
         </encoder>
     </appender>
 
-    &lt;!&ndash;<appender name="fluentd" class="ch.qos.logback.more.appenders.DataFluentAppender">
+    <!--<appender name="fluentd" class="ch.qos.logback.more.appenders.DataFluentAppender">
         <tag>app.logs</tag>
         <label>normal</label>
         <remoteHost>${LOGS_FB_HOSTS}</remoteHost>
@@ -48,32 +47,15 @@
                 <tags/>
             </providers>
         </encoder>
-    </appender>&ndash;&gt;
+    </appender>-->
 
     <logger name="ru.otus" level="${LOG_OTUS_LEVEL}" additivity="false">
-        &lt;!&ndash;<appender-ref ref="fluentd"/>&ndash;&gt;
+        <!--<appender-ref ref="fluentd"/>-->
         <appender-ref ref="STDOUT"/>
     </logger>
 
-    <logger name="Application" level="INFO">
-        <appender-ref ref="STDOUT"/>
-    </logger>
-
-    <root level="${LOG_COMMON_LEVEL}">
-        &lt;!&ndash;<appender-ref ref="fluentd"/>&ndash;&gt;
+    <root level="${LOG_OTUS_LEVEL}">
+        <!--<appender-ref ref="fluentd"/>-->
         <appender-ref ref="STDOUT"/>
     </root>
-</configuration>
--->
-<configuration>
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%d{YYYY-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-        </encoder>
-    </appender>
-    <root level="DEBUG">
-        <appender-ref ref="STDOUT"/>
-    </root>
-    <logger name="org.eclipse.jetty" level="ERROR"/>
-    <logger name="io.netty" level="ERROR"/>
 </configuration>

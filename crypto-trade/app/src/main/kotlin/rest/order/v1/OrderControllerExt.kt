@@ -10,6 +10,7 @@ import ru.otus.otuskotlin.crypto.trade.app.AppSettings
 import ru.otus.otuskotlin.crypto.trade.common.OrderContext
 import ru.otus.otuskotlin.crypto.trade.common.models.OrderCommand
 import ru.otus.otuskotlin.crypto.trade.common.models.OrderState
+import ru.otus.otuskotlin.crypto.trade.log.api.v1.toLog
 import ru.otus.otuskotlin.crypto.trade.mappers.fromTransport
 import ru.otus.otuskotlin.crypto.trade.mappers.toTransportOrder
 import ru.otus.otuskotlin.marketplace.common.helpers.asOrderError
@@ -20,8 +21,8 @@ suspend inline fun <reified Q : IRequest, @Suppress("unused") reified R : IRespo
     clazz: KClass<*>,
     logId: String,
 ) = appSettings.controllerHelper(
-    { fromTransport(receive<Q>()) },
-    { respond(toTransportOrder()) },
+    { fromTransport(this@processOrder.receive<Q>()) },
+    { this@processOrder.respond(toTransportOrder()) },
     clazz,
     logId,
 )
@@ -32,30 +33,31 @@ suspend inline fun <T> AppSettings.controllerHelper(
     clazz: KClass<*>,
     logId: String,
 ): T {
+    val logger = corSettings.loggerProvider.logger(clazz)
     val ctx = OrderContext(
         timeStart = Clock.System.now(),
     )
     return try {
         ctx.getRequest()
-        /*logger.info(
+        logger.info(
             msg = "Request $logId started for ${clazz.simpleName}",
             marker = "BIZ",
             data = ctx.toLog(logId)
-        )*/
+        )
         processor.exec(ctx)
-        /*logger.info(
+        logger.info(
             msg = "Request $logId processed for ${clazz.simpleName}",
             marker = "BIZ",
             data = ctx.toLog(logId)
-        )*/
+        )
         ctx.toResponse()
     } catch (e: Throwable) {
-        /*logger.error(
+        logger.error(
             msg = "Request $logId failed for ${clazz.simpleName}",
             marker = "BIZ",
             data = ctx.toLog(logId),
             e = e,
-        )*/
+        )
         ctx.state = OrderState.FAILING
         ctx.errors.add(e.asOrderError())
         processor.exec(ctx)

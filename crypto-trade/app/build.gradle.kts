@@ -44,8 +44,10 @@ dependencies {
 
     implementation(project(":common"))
     implementation(project(":api-v1"))
+    implementation(project(":log-v1"))
     implementation(project(":core"))
     implementation(project(":mappers"))
+    implementation("ru.otus.otuskotlin.cryptotrade.libs:logging-logback")
 
 
     /*implementation(libs.ktor.server.cors)

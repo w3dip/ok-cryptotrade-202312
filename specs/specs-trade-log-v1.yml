@@ -1,0 +1,104 @@
+openapi: 3.0.4
+info:
+  title: "CryptoXchange Trading log API v1"
+  description: Log models for logging services of crypto trade
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+paths: { }
+
+components:
+  schemas:
+    CommonLogModel:
+      title: Общая модель лога
+      description: Общая модель лога для всех микросервисов системы
+      type: object
+      properties:
+        messageTime:
+          type: string
+        logId:
+          type: string
+        source:
+          type: string
+        order:
+          $ref: '#/components/schemas/OrderLogModel'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorLogModel'
+
+    OrderLogModel:
+      title: Модель лога для микросервиса CryptoTrade
+      type: object
+      properties:
+        requestId:
+          type: string
+        operation:
+          type: string
+          enum:
+            - create
+            - read
+            - update
+            - delete
+            - search
+            - init
+            - finish
+        requestOrder:
+          $ref: '#/components/schemas/OrderLog'
+        requestFilter:
+          $ref: '#/components/schemas/OrderFilterLog'
+        responseOrder:
+          $ref: '#/components/schemas/OrderLog'
+        responseOrders:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderLog'
+
+    ErrorLogModel:
+      title: Модель лога для ошибки
+      type: object
+      properties:
+        message:
+          type: string
+        field:
+          type: string
+        code:
+          type: string
+        level:
+          type: string
+
+    OrderLog:
+      title: Модель лога для заявки на покупку/продажу актива
+      type: object
+      properties:
+        id:
+          type: string
+        secCode:
+          type: string
+        agreementNumber:
+          type: string
+        quantity:
+          type: number
+        price:
+          type: number
+        operationType:
+          type: string
+        userId:
+          type: string
+        permissions:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+
+    OrderFilterLog:
+      title: Модель лога фильтра
+      properties:
+        searchString:
+          type: string
+        userId:
+          type: string
+        operationType:
+          type: string
+

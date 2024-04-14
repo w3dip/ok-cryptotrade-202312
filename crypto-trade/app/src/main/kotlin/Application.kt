@@ -1,5 +1,6 @@
 package ru.otus.otuskotlin.crypto.trade.app
 
+import CorSettings
 import apiV1Mapper
 import io.ktor.http.*
 import io.ktor.serialization.jackson.*
@@ -15,6 +16,8 @@ import io.ktor.server.routing.*
 import org.slf4j.event.Level
 import ru.otus.otuskotlin.crypto.trade.app.rest.order.v1.orderV1
 import ru.otus.otuskotlin.crypto.trade.core.OrderProcessor
+import ru.otus.otuskotlin.crypto.trade.logging.common.LoggerProvider
+import ru.otus.otuskotlin.crypto.trade.logging.logback.loggerLogback
 
 fun Application.module(
     appSettings: AppSettings = initAppSettings()
@@ -57,8 +60,18 @@ fun Application.module(
 }
 
 fun Application.initAppSettings(): AppSettings {
+    val corSettings = CorSettings(
+        loggerProvider = getLoggerProviderConf(),
+    )
     return AppSettings(
         appUrls = environment.config.propertyOrNull("ktor.urls")?.getList() ?: emptyList(),
-        processor = OrderProcessor(),
+        corSettings = corSettings,
+        processor = OrderProcessor(corSettings),
     )
 }
+
+fun Application.getLoggerProviderConf(): LoggerProvider =
+    when (val mode = environment.config.propertyOrNull("ktor.logger")?.getString()) {
+        "logback", null -> LoggerProvider { loggerLogback(it) }
+        else -> throw Exception("Logger $mode is not allowed. Additted value is logback (default)")
+    }

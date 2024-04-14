@@ -1,4 +1,4 @@
-rootProject.name = "crypto-trade"
+rootProject.name = "crypto-trade-libs"
 
 dependencyResolutionManagement {
     versionCatalogs {
@@ -20,10 +20,7 @@ pluginManagement {
     }
 }
 
-include(":common")
-include(":api-v1")
-include(":log-v1")
-include(":core")
-include(":app")
-include(":mappers")
-include(":stubs")
+include(":logging-common")
+include(":logging-logback")
+
+//include(":ok-marketplace-lib-cor")

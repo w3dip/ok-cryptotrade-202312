@@ -1,5 +1,6 @@
 package rest.order.v1
 
+import CorSettings
 import kotlinx.coroutines.test.runTest
 import ru.otus.otuskotlin.crypto.trade.api.v1.models.*
 import ru.otus.otuskotlin.crypto.trade.app.AppSettings
@@ -24,7 +25,8 @@ class OrderControllerExtTest {
         debug = OrderDebug(mode = OrderRequestDebugMode.STUB, stub = OrderRequestDebugStubs.SUCCESS)
     )
 
-    private val appSettings = AppSettings(emptyList(), OrderProcessor())
+    private val corSettings = CorSettings()
+    private val appSettings = AppSettings(emptyList(), corSettings, OrderProcessor(corSettings))
 
     class TestApplicationCall(private val request: IRequest) {
         var res: IResponse? = null
