@@ -2,17 +2,29 @@ package ru.otus.otuskotlin.crypto.trade.app
 
 import apiV1Mapper
 import io.ktor.http.*
-import io.ktor.serialization.kotlinx.json.*
+import io.ktor.serialization.jackson.*
 import io.ktor.server.application.*
+import io.ktor.server.plugins.autohead.*
+import io.ktor.server.plugins.cachingheaders.*
+import io.ktor.server.plugins.callloging.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
+import io.ktor.server.plugins.defaultheaders.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import org.slf4j.event.Level
+import ru.otus.otuskotlin.crypto.trade.app.rest.order.v1.orderV1
 import ru.otus.otuskotlin.crypto.trade.core.OrderProcessor
 
 fun Application.module(
     appSettings: AppSettings = initAppSettings()
 ) {
+    install(CachingHeaders)
+    install(DefaultHeaders)
+    install(AutoHeadResponse)
+    install(CallLogging) {
+        level = Level.INFO
+    }
     install(CORS) {
         allowMethod(HttpMethod.Options)
         allowMethod(HttpMethod.Put)
@@ -34,12 +46,12 @@ fun Application.module(
         }
         route("v1") {
             install(ContentNegotiation) {
-                json(apiV1Mapper)
+                jackson {
+                    setConfig(apiV1Mapper.serializationConfig)
+                    setConfig(apiV1Mapper.deserializationConfig)
+                }
             }
-            v2Ad(appSettings)
-            webSocket("/ws") {
-                wsHandlerV2(appSettings)
-            }
+            orderV1(appSettings)
         }
     }
 }

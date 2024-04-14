@@ -24,13 +24,18 @@ jib {
 }
 
 dependencies {
-    implementation(libs.logback)
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.negotiation)
     implementation(libs.ktor.server.netty)
     implementation(libs.ktor.server.yaml)
     implementation(libs.ktor.server.cors)
-    implementation(libs.ktor.serialization.json)
+    implementation(libs.ktor.serialization.jackson)
+    implementation(libs.ktor.server.calllogging)
+    implementation(libs.ktor.server.headers.response)
+    implementation(libs.ktor.server.headers.caching)
+    implementation(libs.ktor.server.headers.default)
+
+    implementation(libs.logback)
 
     testImplementation(libs.ktor.server.tests)
     testImplementation(libs.kotlin.test.junit)

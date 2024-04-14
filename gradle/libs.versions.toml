@@ -1,14 +1,13 @@
 [versions]
-kotlin = "1.9.23"
+kotlin = "1.9.22"
 
 kotlinx-datetime = "0.5.0"
 kotlinx-serialization = "1.6.3"
-kotlin-serialization = "1.8.21"
 coroutines = "1.8.0"
 
 binaryCompabilityValidator = "0.13.2"
 
-openapi-generator = "6.5.0"
+openapi-generator = "7.3.0"
 jackson = "2.16.1"
 
 logback = "1.5.3"
@@ -22,6 +21,9 @@ ktor = "2.3.9"
 testcontainers = "1.19.7"
 muschko = "9.4.0"
 
+# Commons
+apache-commons-lang3 = "3.14.0"
+
 # BASE
 jvm-compiler = "17"
 jvm-language = "17"
@@ -30,11 +32,11 @@ jvm-language = "17"
 plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 plugin-binaryCompatibilityValidator = { module = "org.jetbrains.kotlinx:binary-compatibility-validator", version.ref = "binaryCompabilityValidator" }
 kotlinx-datetime = {module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime"}
-kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin-serialization" }
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinx-serialization" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+apache-commons-lang3 = { module = "org.apache.commons:commons-lang3", version.ref = "apache-commons-lang3" }
 
 jackson-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
 jackson-datatype = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson" }
@@ -46,11 +48,15 @@ kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 # Ktor
 ktor-server-core = { module = "io.ktor:ktor-server-core-jvm" }
 ktor-server-negotiation = { module = "io.ktor:ktor-server-content-negotiation-jvm" }
-ktor-serialization-json = { module = "io.ktor:ktor-serialization-kotlinx-json-jvm" }
+ktor-serialization-jackson = { module = "io.ktor:ktor-serialization-jackson" }
 ktor-server-netty = { module = "io.ktor:ktor-server-netty-jvm" }
 ktor-server-tests = { module = "io.ktor:ktor-server-tests-jvm" }
 ktor-server-yaml = { module = "io.ktor:ktor-server-config-yaml" }
 ktor-server-cors = { module = "io.ktor:ktor-server-cors-jvm" }
+ktor-server-calllogging = { module = "io.ktor:ktor-server-call-logging" }
+ktor-server-headers-response = { module = "io.ktor:ktor-server-auto-head-response" }
+ktor-server-headers-caching = { module = "io.ktor:ktor-server-caching-headers" }
+ktor-server-headers-default = { module = "io.ktor:ktor-server-default-headers" }
 
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
