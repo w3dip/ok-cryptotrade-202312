@@ -32,7 +32,7 @@ class AppKafkaConsumer(
     private val producer: Producer<String, String> = config.createKafkaProducer()
 ) {
     private val log = config.corSettings.loggerProvider.logger(this::class)
-    private val process = atomic(true) // пояснить
+    private val process = atomic(true)
     private val topicsAndStrategyByInputTopic: Map<String, TopicsAndStrategy> = consumerStrategies.associate {
         val topics = it.topics(config)
         topics.input to TopicsAndStrategy(topics.input, topics.output, it)
