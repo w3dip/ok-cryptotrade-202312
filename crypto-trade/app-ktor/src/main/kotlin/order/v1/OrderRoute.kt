@@ -7,7 +7,7 @@ import ru.otus.otuskotlin.crypto.trade.app.AppSettings
 import ru.otus.otuskotlin.crypto.trade.app.order.v1.rest.*
 import ru.otus.otuskotlin.crypto.trade.app.order.v1.ws.orderHandler
 
-fun Route.orderV1Rest(appSettings: AppSettings) {
+fun Route.orderV1(appSettings: AppSettings) {
     route("order") {
         post("create") {
             call.createOrder(appSettings)
@@ -24,11 +24,6 @@ fun Route.orderV1Rest(appSettings: AppSettings) {
         post("search") {
             call.searchOrder(appSettings)
         }
-    }
-}
-
-fun Route.orderV1Ws(appSettings: AppSettings) {
-    route("order") {
         webSocket("ws") {
             orderHandler(appSettings)
         }

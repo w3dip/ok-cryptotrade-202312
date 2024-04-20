@@ -15,8 +15,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import org.slf4j.event.Level
-import ru.otus.otuskotlin.crypto.trade.app.order.v1.orderV1Rest
-import ru.otus.otuskotlin.crypto.trade.app.order.v1.orderV1Ws
+import ru.otus.otuskotlin.crypto.trade.app.order.v1.orderV1
 import ru.otus.otuskotlin.crypto.trade.core.OrderProcessor
 import ru.otus.otuskotlin.crypto.trade.logging.common.LoggerProvider
 import ru.otus.otuskotlin.crypto.trade.logging.logback.loggerLogback
@@ -57,8 +56,7 @@ fun Application.module(
                     setConfig(apiV1Mapper.deserializationConfig)
                 }
             }
-            orderV1Rest(appSettings)
-            orderV1Ws(appSettings)
+            orderV1(appSettings)
         }
     }
 }
