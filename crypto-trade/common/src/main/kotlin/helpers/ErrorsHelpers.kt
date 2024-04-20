@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.marketplace.common.helpers
+package ru.otus.otuskotlin.crypto.trade.common.helpers
 
 import ru.otus.otuskotlin.crypto.trade.common.models.OrderError
 

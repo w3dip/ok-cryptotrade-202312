@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.marketplace.app.kafka
+package ru.otus.otuskotlin.crypto.trade.app.kafka
 
 import apiV1RequestSerialize
 import apiV1ResponseDeserialize
@@ -10,9 +10,6 @@ import org.apache.kafka.common.TopicPartition
 import org.apache.kafka.common.serialization.StringSerializer
 import org.junit.Test
 import ru.otus.otuskotlin.crypto.trade.api.v1.models.*
-import ru.otus.otuskotlin.crypto.trade.app.kafka.AppKafkaConfig
-import ru.otus.otuskotlin.crypto.trade.app.kafka.AppKafkaConsumer
-import ru.otus.otuskotlin.crypto.trade.app.kafka.ConsumerStrategyV1
 import java.math.BigDecimal
 import java.util.*
 import kotlin.test.assertEquals

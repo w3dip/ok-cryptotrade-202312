@@ -22,5 +22,3 @@ pluginManagement {
 
 include(":logging-common")
 include(":logging-logback")
-
-//include(":ok-marketplace-lib-cor")

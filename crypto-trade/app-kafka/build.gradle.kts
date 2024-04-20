@@ -5,7 +5,7 @@ plugins {
 }
 
 application {
-    mainClass.set("ru.otus.otuskotlin.marketplace.app.kafka.MainKt")
+    mainClass.set("ru.otus.otuskotlin.crypto.trade.app.kafka.MainKt")
 }
 
 docker {

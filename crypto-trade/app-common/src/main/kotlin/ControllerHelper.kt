@@ -1,10 +1,10 @@
 package ru.otus.otuskotlin.crypto.trade.app.common
 
 import ru.otus.otuskotlin.crypto.trade.common.OrderContext
+import ru.otus.otuskotlin.crypto.trade.common.helpers.asOrderError
 import ru.otus.otuskotlin.crypto.trade.common.models.OrderCommand.NONE
 import ru.otus.otuskotlin.crypto.trade.common.models.OrderCommand.READ
 import ru.otus.otuskotlin.crypto.trade.log.api.v1.toLog
-import ru.otus.otuskotlin.marketplace.common.helpers.asOrderError
 
 suspend inline fun <T> CommonAppSettings.controllerHelper(
     crossinline getRequest: suspend OrderContext.() -> Unit,
