@@ -61,6 +61,7 @@ ktor-server-calllogging = { module = "io.ktor:ktor-server-call-logging" }
 ktor-server-headers-response = { module = "io.ktor:ktor-server-auto-head-response" }
 ktor-server-headers-caching = { module = "io.ktor:ktor-server-caching-headers" }
 ktor-server-headers-default = { module = "io.ktor:ktor-server-default-headers" }
+ktor-server-websocket = { module = "io.ktor:ktor-server-websockets" }
 
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }

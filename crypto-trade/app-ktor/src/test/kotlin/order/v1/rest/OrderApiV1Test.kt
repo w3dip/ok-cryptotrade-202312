@@ -1,5 +1,6 @@
-package rest.order.v1
+package order.v1.rest
 
+import CorSettings
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.SerializationFeature
 import io.ktor.client.call.*
@@ -119,7 +120,7 @@ class OrderApiV1Test {
         request: IRequest,
         function: suspend (HttpResponse) -> Unit,
     ): Unit = testApplication {
-        application { module(AppSettings()) }
+        application { module(AppSettings(corSettings = CorSettings())) }
         val client = createClient {
             install(ContentNegotiation) {
                 jackson {

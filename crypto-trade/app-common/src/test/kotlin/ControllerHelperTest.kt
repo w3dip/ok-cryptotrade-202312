@@ -44,7 +44,6 @@ class ControllerHelperTest {
             appSettings.controllerHelper(
                 { fromTransport(receive<OrderCreateRequest>()) },
                 { toTransportOrder() },
-                ControllerHelperTest::class,
                 "controller-v1-test"
             )
         )

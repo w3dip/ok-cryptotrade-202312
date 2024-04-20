@@ -13,8 +13,10 @@ import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.plugins.defaultheaders.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import io.ktor.server.websocket.*
 import org.slf4j.event.Level
-import ru.otus.otuskotlin.crypto.trade.app.rest.order.v1.orderV1
+import ru.otus.otuskotlin.crypto.trade.app.order.v1.orderV1Rest
+import ru.otus.otuskotlin.crypto.trade.app.order.v1.orderV1Ws
 import ru.otus.otuskotlin.crypto.trade.core.OrderProcessor
 import ru.otus.otuskotlin.crypto.trade.logging.common.LoggerProvider
 import ru.otus.otuskotlin.crypto.trade.logging.logback.loggerLogback
@@ -28,6 +30,7 @@ fun Application.module(
     install(CallLogging) {
         level = Level.INFO
     }
+    install(WebSockets)
     install(CORS) {
         allowMethod(HttpMethod.Options)
         allowMethod(HttpMethod.Put)
@@ -54,7 +57,8 @@ fun Application.module(
                     setConfig(apiV1Mapper.deserializationConfig)
                 }
             }
-            orderV1(appSettings)
+            orderV1Rest(appSettings)
+            orderV1Ws(appSettings)
         }
     }
 }

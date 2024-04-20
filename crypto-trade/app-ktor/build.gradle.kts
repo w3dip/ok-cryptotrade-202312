@@ -33,6 +33,7 @@ dependencies {
     implementation(libs.ktor.server.headers.response)
     implementation(libs.ktor.server.headers.caching)
     implementation(libs.ktor.server.headers.default)
+    implementation(libs.ktor.server.websocket)
 
     implementation(libs.logback)
 
