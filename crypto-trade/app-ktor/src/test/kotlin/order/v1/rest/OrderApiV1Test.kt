@@ -46,7 +46,7 @@ class OrderApiV1Test {
     fun read() = orderApiV1TestApplication(
         func = "read",
         request = OrderReadRequest(
-            order = OrderReadObject("102"),
+            order = OrderReadObject("001"),
             debug = OrderDebug(
                 mode = OrderRequestDebugMode.STUB,
                 stub = OrderRequestDebugStubs.SUCCESS
@@ -55,7 +55,7 @@ class OrderApiV1Test {
     ) { response ->
         val responseObj = response.body<OrderReadResponse>()
         assertEquals(200, response.status.value)
-        assertEquals("102", responseObj.order?.id)
+        assertEquals("001", responseObj.order?.id)
     }
 
     @Test
@@ -86,7 +86,7 @@ class OrderApiV1Test {
         func = "delete",
         request = OrderDeleteRequest(
             order = OrderDeleteObject(
-                id = "102",
+                id = "001",
             ),
             debug = OrderDebug(
                 mode = OrderRequestDebugMode.STUB,
@@ -96,7 +96,7 @@ class OrderApiV1Test {
     ) { response ->
         val responseObj = response.body<OrderDeleteResponse>()
         assertEquals(200, response.status.value)
-        assertEquals("102", responseObj.order?.id)
+        assertEquals("001", responseObj.order?.id)
     }
 
     @Test

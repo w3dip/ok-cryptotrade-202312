@@ -1,22 +1,18 @@
 package ru.otus.otuskotlin.crypto.trade.stubs
 
-import org.apache.commons.lang3.RandomStringUtils.randomAlphabetic
-import org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric
-import randomUUID
 import ru.otus.otuskotlin.crypto.trade.common.models.*
 import java.math.BigDecimal
-import kotlin.random.Random
 
 object OrderStub {
 
     val ORDER_BUY: Order
         get() = Order(
-            id = OrderId(randomUUID()),
-            secCode = randomAlphabetic(3).uppercase(),
-            agreementNumber = randomAlphanumeric(5).uppercase(),
-            quantity = BigDecimal.valueOf(Random.nextDouble(1000.00)),
-            price = BigDecimal.valueOf(Random.nextDouble(100_000.00)),
-            userId = OrderUserId(randomUUID()),
+            id = OrderId("001"),
+            secCode = "BTC",
+            agreementNumber = "A001",
+            quantity = BigDecimal.valueOf(1000.00),
+            price = BigDecimal.valueOf(100_000.00),
+            userId = OrderUserId("user-1"),
             operationType = OrderSide.BUY,
             permissionsClient = mutableSetOf(
                 OrderPermissionClient.READ,
@@ -30,9 +26,17 @@ object OrderStub {
 
     fun prepareResult(block: Order.() -> Unit): Order = get().apply(block)
 
-    fun prepareResultList() = (1..10).map { orderBuy() }
+    fun prepareResultList(filter: String, type: OrderSide) = (1..10).map { orderBuy(it.toString(), filter, type) }
 
-    private fun orderBuy() = ORDER_BUY.copy()
+    private fun orderBuy(id: String, filter: String, type: OrderSide) =
+        order(ORDER_BUY, id = id, filter = filter, type = type)
 
-    private fun orderSell() = ORDER_SELL.copy()
+    private fun orderSell(id: String, filter: String, type: OrderSide) =
+        order(ORDER_SELL, id = id, filter = filter, type = type)
+
+    private fun order(base: Order, id: String, filter: String, type: OrderSide) = base.copy(
+        id = OrderId(id),
+        secCode = "$filter $id",
+        operationType = type
+    )
 }

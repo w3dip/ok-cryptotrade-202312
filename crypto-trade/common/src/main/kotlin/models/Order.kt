@@ -14,6 +14,9 @@ data class Order(
     var lock: OrderLock = OrderLock.NONE,
     val permissionsClient: MutableSet<OrderPermissionClient> = mutableSetOf()
 ) {
+    fun deepCopy(): Order = copy(
+        permissionsClient = permissionsClient.toMutableSet(),
+    )
     fun isEmpty() = this == NONE
 
     companion object {

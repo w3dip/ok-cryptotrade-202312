@@ -22,3 +22,5 @@ pluginManagement {
 
 include(":logging-common")
 include(":logging-logback")
+
+include(":cor")

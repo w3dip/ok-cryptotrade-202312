@@ -33,7 +33,7 @@ private fun OrderDebug?.transportToWorkMode(): OrderWorkMode = when (this?.mode)
 private fun OrderDebug?.transportToStubCase(): OrderStubs = when (this?.stub) {
     OrderRequestDebugStubs.SUCCESS -> OrderStubs.SUCCESS
     OrderRequestDebugStubs.NOT_FOUND -> OrderStubs.NOT_FOUND
-    OrderRequestDebugStubs.BAD_ORDER_ID -> OrderStubs.BAD_ORDER_ID
+    OrderRequestDebugStubs.BAD_ORDER_ID -> OrderStubs.BAD_ID
     OrderRequestDebugStubs.BAD_SEC_CODE -> OrderStubs.BAD_SEC_CODE
     OrderRequestDebugStubs.BAD_AGREEMENT_NUMBER -> OrderStubs.BAD_AGREEMENT_NUMBER
     OrderRequestDebugStubs.BAD_QUANTITY -> OrderStubs.BAD_QUANTITY
