@@ -7,4 +7,6 @@ enum class OrderCommand {
     UPDATE,
     DELETE,
     SEARCH,
+    INIT,
+    FINISH,
 }

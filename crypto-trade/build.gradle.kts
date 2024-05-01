@@ -24,12 +24,13 @@ subprojects {
 ext {
     val specDir = layout.projectDirectory.dir("../specs")
     set("specs-trade-api-v1", specDir.file("specs-trade-api-v1.yml").toString())
+    set("specs-trade-log-v1", specDir.file("specs-trade-log-v1.yml").toString())
 }
 
 tasks {
     create("build") {
         group = "build"
-        dependsOn(project(":app").getTasksByName("build", false))
+        dependsOn(project(":app-ktor").getTasksByName("build", false))
     }
     create("check") {
         group = "verification"

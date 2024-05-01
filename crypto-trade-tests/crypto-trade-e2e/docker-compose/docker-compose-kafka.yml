@@ -50,14 +50,14 @@ services:
       - "9000:9000"
     environment:
       KAFKA_BROKERCONNECT: "kafka:9092"
-      JVM_OPTS: "-Xms16M -Xmx48M -Xss180K -XX:-TieredCompilation -XX:+UseStringDeduplication -noverify"
+      JVM_OPTS: "-Xms160M -Xmx480M -Xss1800K -XX:-TieredCompilation -XX:+UseStringDeduplication -noverify"
     depends_on:
       - "kafka"
     networks:
       - app-tier
 
   app-kafka:
-    image: ok-crypto-trade-app-kafka:latest
+    image: ru.otus.otuskotlin.crypto.trade/app-kafka:1.0.0
     depends_on:
       kafka:
         condition: service_healthy

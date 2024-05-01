@@ -15,6 +15,12 @@ fun OrderContext.toTransportOrder(): IResponse = when (val cmd = command) {
     OrderCommand.UPDATE -> toTransportUpdate()
     OrderCommand.DELETE -> toTransportDelete()
     OrderCommand.SEARCH -> toTransportSearch()
+    OrderCommand.INIT -> toTransportInit()
+    OrderCommand.FINISH -> object : IResponse {
+        override val responseType: String? = null
+        override val result: ResponseResult? = null
+        override val errors: List<Error>? = null
+    }
     OrderCommand.NONE -> throw UnknownOrderCommand(cmd)
 }
 
@@ -46,6 +52,11 @@ fun OrderContext.toTransportSearch() = OrderSearchResponse(
     result = state.toResult(),
     errors = errors.toTransportErrors(),
     orders = ordersResponse.toTransportOrder()
+)
+
+fun OrderContext.toTransportInit() = OrderInitResponse(
+    result = state.toResult(),
+    errors = errors.toTransportErrors(),
 )
 
 fun List<Order>.toTransportOrder(): List<OrderResponseObject>? = this

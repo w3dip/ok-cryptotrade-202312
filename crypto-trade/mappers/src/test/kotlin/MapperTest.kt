@@ -56,8 +56,8 @@ class MapperTest {
                 OrderError(
                     code = "err",
                     group = "request",
-                    field = "title",
-                    message = "wrong title",
+                    field = "quantity",
+                    message = "wrong quantity",
                 )
             ),
             state = OrderState.RUNNING,
@@ -73,7 +73,7 @@ class MapperTest {
         assertEquals(1, req.errors?.size)
         assertEquals("err", req.errors?.firstOrNull()?.code)
         assertEquals("request", req.errors?.firstOrNull()?.group)
-        assertEquals("title", req.errors?.firstOrNull()?.field)
-        assertEquals("wrong title", req.errors?.firstOrNull()?.message)
+        assertEquals("quantity", req.errors?.firstOrNull()?.field)
+        assertEquals("wrong quantity", req.errors?.firstOrNull()?.message)
     }
 }

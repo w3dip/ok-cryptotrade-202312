@@ -22,5 +22,10 @@ pluginManagement {
 
 include(":common")
 include(":api-v1")
-include(":app")
+include(":log-v1")
+include(":core")
+include(":app-common")
+include(":app-ktor")
+include(":app-kafka")
 include(":mappers")
+include(":stubs")

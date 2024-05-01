@@ -14,11 +14,15 @@ logback = "1.5.3"
 kotest = "5.8.0"
 kermit = "2.0.3"
 
-#Frameworks
+# Frameworks
 ktor = "2.3.9"
 
-#Testing
+# Docker
 testcontainers = "1.19.7"
+muschko = "9.4.0"
+
+# Commons
+apache-commons-lang3 = "3.14.0"
 
 # BASE
 jvm-compiler = "17"
@@ -28,23 +32,47 @@ jvm-language = "17"
 plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 plugin-binaryCompatibilityValidator = { module = "org.jetbrains.kotlinx:binary-compatibility-validator", version.ref = "binaryCompabilityValidator" }
 kotlinx-datetime = {module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime"}
+kotlinx-atomicfu = { module = "org.jetbrains.kotlinx:atomicfu", version = "0.23.2" }
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinx-serialization" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+apache-commons-lang3 = { module = "org.apache.commons:commons-lang3", version.ref = "apache-commons-lang3" }
 
 jackson-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
 jackson-datatype = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson" }
 
 # Logging
+logback-appenders = { module = "com.sndyuk:logback-more-appenders", version = "1.8.8" }
+logback-logstash = { module = "net.logstash.logback:logstash-logback-encoder", version = "7.4" }
+logger-fluentd = { module = "org.fluentd:fluent-logger", version = "0.3.4" }
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 
 # Ktor
+ktor-server-core = { module = "io.ktor:ktor-server-core-jvm" }
+ktor-server-negotiation = { module = "io.ktor:ktor-server-content-negotiation-jvm" }
+ktor-serialization-jackson = { module = "io.ktor:ktor-serialization-jackson" }
+ktor-server-netty = { module = "io.ktor:ktor-server-netty-jvm" }
+ktor-server-tests = { module = "io.ktor:ktor-server-tests-jvm" }
+ktor-server-yaml = { module = "io.ktor:ktor-server-config-yaml" }
+ktor-server-cors = { module = "io.ktor:ktor-server-cors-jvm" }
+ktor-server-calllogging = { module = "io.ktor:ktor-server-call-logging" }
+ktor-server-headers-response = { module = "io.ktor:ktor-server-auto-head-response" }
+ktor-server-headers-caching = { module = "io.ktor:ktor-server-caching-headers" }
+ktor-server-headers-default = { module = "io.ktor:ktor-server-default-headers" }
+ktor-server-websocket = { module = "io.ktor:ktor-server-websockets" }
+
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-negotiation = { module = "io.ktor:ktor-client-content-negotiation" }
+
+# Message Queues
+kafka-client = { module = "org.apache.kafka:kafka-clients", version = "3.7.0" }
 
 # Testing
+kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
+
 kotest-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 kotest-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
 kotest-datatest = { module = "io.kotest:kotest-framework-datatest", version.ref = "kotest" }
@@ -60,3 +88,10 @@ kotlin-multiplatform = {id = "org.jetbrains.kotlin.multiplatform", version.ref =
 kotlin-jvm = {id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin"}
 openapi-generator = { id = "org.openapi.generator", version.ref = "openapi-generator" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+shadowJar = { id = "com.github.johnrengelman.shadow", version = "8.1.1" }
+
+# Ktor
+ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
+
+# Docker
+muschko-java = { id = "com.bmuschko.docker-java-application", version.ref = "muschko" }
