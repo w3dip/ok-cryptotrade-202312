@@ -396,7 +396,7 @@ components:
       enum:
         - success
         - notFound
-        - badOrderId
+        - badId
         - badSecCode
         - badAgreementNumber
         - badQuantity

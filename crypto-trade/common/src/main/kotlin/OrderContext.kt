@@ -1,5 +1,6 @@
 package ru.otus.otuskotlin.crypto.trade.common
 
+import CorSettings
 import kotlinx.datetime.Instant
 import ru.otus.otuskotlin.crypto.trade.common.models.*
 import ru.otus.otuskotlin.crypto.trade.common.stubs.OrderStubs
@@ -10,6 +11,7 @@ data class OrderContext(
     var state: OrderState = OrderState.NONE,
     val errors: MutableList<OrderError> = mutableListOf(),
 
+    var corSettings: CorSettings = CorSettings(),
     var workMode: OrderWorkMode = OrderWorkMode.PROD,
     var stubCase: OrderStubs = OrderStubs.NONE,
     var wsSession: WsSession = WsSession.NONE,
@@ -18,6 +20,12 @@ data class OrderContext(
     var timeStart: Instant = Instant.NONE,
     var orderRequest: Order = Order(),
     var orderFilterRequest: OrderFilter = OrderFilter(),
+
+    var orderValidating: Order = Order(),
+    var orderFilterValidating: OrderFilter = OrderFilter(),
+
+    var orderValidated: Order = Order(),
+    var orderFilterValidated: OrderFilter = OrderFilter(),
 
     var orderResponse: Order = Order(),
     var ordersResponse: MutableList<Order> = mutableListOf()

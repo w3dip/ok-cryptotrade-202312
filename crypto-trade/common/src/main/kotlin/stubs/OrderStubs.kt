@@ -4,7 +4,7 @@ enum class OrderStubs {
     NONE,
     SUCCESS,
     NOT_FOUND,
-    BAD_ORDER_ID,
+    BAD_ID,
     BAD_SEC_CODE,
     BAD_AGREEMENT_NUMBER,
     BAD_QUANTITY,
