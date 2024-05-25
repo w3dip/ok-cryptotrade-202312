@@ -16,9 +16,12 @@ import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import org.slf4j.event.Level
 import ru.otus.otuskotlin.crypto.trade.app.order.v1.orderV1
+import ru.otus.otuskotlin.crypto.trade.app.plugins.OrderDbType
+import ru.otus.otuskotlin.crypto.trade.app.plugins.getDatabaseConf
 import ru.otus.otuskotlin.crypto.trade.core.OrderProcessor
 import ru.otus.otuskotlin.crypto.trade.logging.common.LoggerProvider
 import ru.otus.otuskotlin.crypto.trade.logging.logback.loggerLogback
+import ru.otus.otuskotlin.crypto.trade.repo.stubs.OrderRepoStub
 
 fun Application.module(
     appSettings: AppSettings = initAppSettings()
@@ -64,6 +67,9 @@ fun Application.module(
 fun Application.initAppSettings(): AppSettings {
     val corSettings = CorSettings(
         loggerProvider = getLoggerProviderConf(),
+        repoTest = getDatabaseConf(OrderDbType.TEST),
+        repoProd = getDatabaseConf(OrderDbType.PROD),
+        repoStub = OrderRepoStub(),
     )
     return AppSettings(
         appUrls = environment.config.propertyOrNull("ktor.urls")?.getList() ?: emptyList(),

@@ -20,6 +20,8 @@ pluginManagement {
     }
 }
 
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 include(":common")
 include(":api-v1")
 include(":log-v1")
@@ -29,3 +31,10 @@ include(":app-ktor")
 include(":app-kafka")
 include(":mappers")
 include(":stubs")
+
+// DB
+include(":repo-common")
+include(":repo-inmemory")
+include(":repo-stubs")
+include(":repo-tests")
+include(":repo-cassandra")

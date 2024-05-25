@@ -1,10 +1,12 @@
 package ru.otus.otuskotlin.crypto.trade.core.validation
 
-import kotlinx.coroutines.test.runTest
 import ru.otus.otuskotlin.crypto.trade.common.OrderContext
-import ru.otus.otuskotlin.crypto.trade.common.models.*
+import ru.otus.otuskotlin.crypto.trade.common.models.OrderCommand
+import ru.otus.otuskotlin.crypto.trade.common.models.OrderState
+import ru.otus.otuskotlin.crypto.trade.common.models.OrderWorkMode
 import ru.otus.otuskotlin.crypto.trade.core.OrderProcessor
 import ru.otus.otuskotlin.crypto.trade.stubs.OrderStub
+import validation.runBizTest
 import java.math.BigDecimal
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
@@ -12,41 +14,27 @@ import kotlin.test.assertNotEquals
 
 private val stub = OrderStub.get()
 
-fun validationQuantityCorrect(command: OrderCommand, processor: OrderProcessor) = runTest {
+fun validationQuantityCorrect(command: OrderCommand, processor: OrderProcessor) = runBizTest {
     val ctx = OrderContext(
         command = command,
         state = OrderState.NONE,
         workMode = OrderWorkMode.TEST,
-        orderRequest = Order(
-            id = stub.id,
-            secCode = "abc",
-            agreementNumber = "abc",
-            operationType = OrderSide.BUY,
-            lock = OrderLock("123-234-abc-ABC"),
-            quantity = BigDecimal.valueOf(5),
-            price = BigDecimal.valueOf(45000)
-        ),
+        orderRequest = OrderStub.get(),
     )
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
     assertNotEquals(OrderState.FAILING, ctx.state)
-    assertEquals(BigDecimal.valueOf(5), ctx.orderValidated.quantity)
+    assertEquals(OrderStub.get().quantity, ctx.orderValidated.quantity)
 }
 
-fun validationQuantityNegative(command: OrderCommand, processor: OrderProcessor) = runTest {
+fun validationQuantityNegative(command: OrderCommand, processor: OrderProcessor) = runBizTest {
     val ctx = OrderContext(
         command = command,
         state = OrderState.NONE,
         workMode = OrderWorkMode.TEST,
-        orderRequest = Order(
-            id = stub.id,
-            secCode = "abc",
-            agreementNumber = "abc",
-            operationType = OrderSide.BUY,
-            lock = OrderLock("123-234-abc-ABC"),
-            quantity = BigDecimal.valueOf(-4),
-            price = BigDecimal.valueOf(45000)
-        ),
+        orderRequest = OrderStub.prepareResult {
+            quantity = BigDecimal.valueOf(-45000)
+        },
     )
     processor.exec(ctx)
     assertEquals(1, ctx.errors.size)
@@ -56,20 +44,14 @@ fun validationQuantityNegative(command: OrderCommand, processor: OrderProcessor)
     assertContains(error?.message ?: "", "quantity")
 }
 
-fun validationQuantityZero(command: OrderCommand, processor: OrderProcessor) = runTest {
+fun validationQuantityZero(command: OrderCommand, processor: OrderProcessor) = runBizTest {
     val ctx = OrderContext(
         command = command,
         state = OrderState.NONE,
         workMode = OrderWorkMode.TEST,
-        orderRequest = Order(
-            id = stub.id,
-            secCode = "abc",
-            agreementNumber = "abc",
-            operationType = OrderSide.BUY,
-            lock = OrderLock("123-234-abc-ABC"),
-            quantity = BigDecimal.ZERO,
-            price = BigDecimal.valueOf(45000)
-        ),
+        orderRequest = OrderStub.prepareResult {
+            quantity = BigDecimal.ZERO
+        },
     )
     processor.exec(ctx)
     assertEquals(1, ctx.errors.size)

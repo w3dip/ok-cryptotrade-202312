@@ -29,6 +29,6 @@ suspend inline fun <reified Q : IRequest, @Suppress("unused") reified R : IRespo
     logId: String,
 ) = appSettings.controllerHelper(
     { fromTransport(this@processOrder.receive<Q>()) },
-    { this@processOrder.respond(toTransportOrder()) },
+    { this@processOrder.respond(toTransportOrder() as R) },
     logId,
 )

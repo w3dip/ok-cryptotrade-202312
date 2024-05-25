@@ -48,5 +48,14 @@ dependencies {
     implementation(project(":log-v1"))
     implementation(project(":core"))
     implementation(project(":mappers"))
+    implementation(project(":stubs"))
+    // DB
+    implementation(libs.uuid)
+    implementation(projects.repoStubs)
+    implementation(projects.repoCassandra)
+    implementation(projects.repoInmemory)
     implementation("ru.otus.otuskotlin.cryptotrade.libs:logging-logback")
+    implementation(libs.testcontainers.cassandra)
+
+    testImplementation(projects.repoCommon)
 }

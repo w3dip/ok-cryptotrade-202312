@@ -1,17 +1,17 @@
 package ru.otus.otuskotlin.crypto.trade.core.validation
 
-import kotlinx.coroutines.test.runTest
 import ru.otus.otuskotlin.crypto.trade.common.OrderContext
 import ru.otus.otuskotlin.crypto.trade.common.models.OrderFilter
 import ru.otus.otuskotlin.crypto.trade.common.models.OrderState
 import ru.otus.otuskotlin.crypto.trade.cor.rootChain
+import validation.runBizTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class ValidateSearchStringLengthTest {
 
     @Test
-    fun emptyString() = runTest {
+    fun emptyString() = runBizTest {
         val ctx = OrderContext(state = OrderState.RUNNING, orderFilterValidating = OrderFilter(searchString = ""))
         chain.exec(ctx)
         assertEquals(OrderState.RUNNING, ctx.state)
@@ -19,7 +19,7 @@ class ValidateSearchStringLengthTest {
     }
 
     @Test
-    fun blankString() = runTest {
+    fun blankString() = runBizTest {
         val ctx = OrderContext(state = OrderState.RUNNING, orderFilterValidating = OrderFilter(searchString = "  "))
         chain.exec(ctx)
         assertEquals(OrderState.RUNNING, ctx.state)
@@ -27,7 +27,7 @@ class ValidateSearchStringLengthTest {
     }
 
     @Test
-    fun shortString() = runTest {
+    fun shortString() = runBizTest {
         val ctx = OrderContext(state = OrderState.RUNNING, orderFilterValidating = OrderFilter(searchString = "12"))
         chain.exec(ctx)
         assertEquals(OrderState.FAILING, ctx.state)
@@ -36,7 +36,7 @@ class ValidateSearchStringLengthTest {
     }
 
     @Test
-    fun normalString() = runTest {
+    fun normalString() = runBizTest {
         val ctx = OrderContext(state = OrderState.RUNNING, orderFilterValidating = OrderFilter(searchString = "123"))
         chain.exec(ctx)
         assertEquals(OrderState.RUNNING, ctx.state)
@@ -44,7 +44,7 @@ class ValidateSearchStringLengthTest {
     }
 
     @Test
-    fun longString() = runTest {
+    fun longString() = runBizTest {
         val ctx = OrderContext(
             state = OrderState.RUNNING,
             orderFilterValidating = OrderFilter(searchString = "12".repeat(51))

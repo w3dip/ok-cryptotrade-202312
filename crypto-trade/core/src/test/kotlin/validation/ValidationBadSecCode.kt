@@ -1,31 +1,39 @@
 package ru.otus.otuskotlin.crypto.trade.core.validation
 
-import kotlinx.coroutines.test.runTest
 import ru.otus.otuskotlin.crypto.trade.common.OrderContext
-import ru.otus.otuskotlin.crypto.trade.common.models.*
+import ru.otus.otuskotlin.crypto.trade.common.models.OrderCommand
+import ru.otus.otuskotlin.crypto.trade.common.models.OrderState
+import ru.otus.otuskotlin.crypto.trade.common.models.OrderWorkMode
 import ru.otus.otuskotlin.crypto.trade.core.OrderProcessor
 import ru.otus.otuskotlin.crypto.trade.stubs.OrderStub
-import java.math.BigDecimal
+import validation.runBizTest
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 private val stub = OrderStub.get()
 
-fun validationSecCodeCorrect(command: OrderCommand, processor: OrderProcessor) = runTest {
+fun validationSecCodeCorrect(command: OrderCommand, processor: OrderProcessor) = runBizTest {
     val ctx = OrderContext(
         command = command,
         state = OrderState.NONE,
         workMode = OrderWorkMode.TEST,
-        orderRequest = Order(
-            id = stub.id,
-            secCode = "abc",
-            agreementNumber = "abc",
-            operationType = OrderSide.BUY,
-            lock = OrderLock("123-234-abc-ABC"),
-            quantity = BigDecimal.valueOf(5),
-            price = BigDecimal.valueOf(45000)
-        ),
+        orderRequest = OrderStub.get(),
+    )
+    processor.exec(ctx)
+    assertEquals(0, ctx.errors.size)
+    assertNotEquals(OrderState.FAILING, ctx.state)
+    assertContains(ctx.orderValidated.secCode, "BTC")
+}
+
+fun validationSecCodeTrim(command: OrderCommand, processor: OrderProcessor) = runBizTest {
+    val ctx = OrderContext(
+        command = command,
+        state = OrderState.NONE,
+        workMode = OrderWorkMode.TEST,
+        orderRequest = OrderStub.prepareResult {
+            secCode = " \n\tabc \n\t"
+        },
     )
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
@@ -33,41 +41,14 @@ fun validationSecCodeCorrect(command: OrderCommand, processor: OrderProcessor) =
     assertEquals("abc", ctx.orderValidated.secCode)
 }
 
-fun validationSecCodeTrim(command: OrderCommand, processor: OrderProcessor) = runTest {
+fun validationSecCodeEmpty(command: OrderCommand, processor: OrderProcessor) = runBizTest {
     val ctx = OrderContext(
         command = command,
         state = OrderState.NONE,
         workMode = OrderWorkMode.TEST,
-        orderRequest = Order(
-            id = stub.id,
-            secCode = " \n\t abc \t\n ",
-            agreementNumber = "abc",
-            operationType = OrderSide.BUY,
-            lock = OrderLock("123-234-abc-ABC"),
-            quantity = BigDecimal.valueOf(5),
-            price = BigDecimal.valueOf(45000)
-        ),
-    )
-    processor.exec(ctx)
-    assertEquals(0, ctx.errors.size)
-    assertNotEquals(OrderState.FAILING, ctx.state)
-    assertEquals("abc", ctx.orderValidated.secCode)
-}
-
-fun validationSecCodeEmpty(command: OrderCommand, processor: OrderProcessor) = runTest {
-    val ctx = OrderContext(
-        command = command,
-        state = OrderState.NONE,
-        workMode = OrderWorkMode.TEST,
-        orderRequest = Order(
-            id = stub.id,
-            secCode = "",
-            agreementNumber = "abc",
-            operationType = OrderSide.BUY,
-            lock = OrderLock("123-234-abc-ABC"),
-            quantity = BigDecimal.valueOf(5),
-            price = BigDecimal.valueOf(45000)
-        ),
+        orderRequest = OrderStub.prepareResult {
+            secCode = ""
+        },
     )
     processor.exec(ctx)
     assertEquals(1, ctx.errors.size)
@@ -77,20 +58,14 @@ fun validationSecCodeEmpty(command: OrderCommand, processor: OrderProcessor) = r
     assertContains(error?.message ?: "", "secCode")
 }
 
-fun validationSecCodeSymbols(command: OrderCommand, processor: OrderProcessor) = runTest {
+fun validationSecCodeSymbols(command: OrderCommand, processor: OrderProcessor) = runBizTest {
     val ctx = OrderContext(
         command = command,
         state = OrderState.NONE,
         workMode = OrderWorkMode.TEST,
-        orderRequest = Order(
-            id = OrderId("123"),
-            secCode = "!@#$%^&*(),.{}",
-            agreementNumber = "abc",
-            operationType = OrderSide.BUY,
-            lock = OrderLock("123-234-abc-ABC"),
-            quantity = BigDecimal.valueOf(5),
-            price = BigDecimal.valueOf(45000)
-        ),
+        orderRequest = OrderStub.prepareResult {
+            secCode = "!@#$%^&*(),.{}"
+        },
     )
     processor.exec(ctx)
     assertEquals(1, ctx.errors.size)

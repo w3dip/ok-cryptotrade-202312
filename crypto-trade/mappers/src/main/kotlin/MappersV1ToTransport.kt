@@ -64,7 +64,7 @@ fun List<Order>.toTransportOrder(): List<OrderResponseObject>? = this
     .toList()
     .takeIf { it.isNotEmpty() }
 
-private fun Order.toTransportOrder(): OrderResponseObject = OrderResponseObject(
+internal fun Order.toTransportOrder(): OrderResponseObject = OrderResponseObject(
     id = id.takeIf { it != OrderId.NONE }?.asString(),
     secCode = secCode.takeIf { it.isNotBlank() },
     agreementNumber = agreementNumber.takeIf { it.isNotBlank() },
@@ -73,38 +73,39 @@ private fun Order.toTransportOrder(): OrderResponseObject = OrderResponseObject(
     userId = userId.takeIf { it != OrderUserId.NONE }?.asString(),
     operationType = operationType.toTransportOrder(),
     permissions = permissionsClient.toTransportOrder(),
+    lock = lock.takeIf { it != OrderLock.NONE }?.asString()
 )
 
-private fun Set<OrderPermissionClient>.toTransportOrder(): Set<OrderPermissions>? = this
+internal fun Set<OrderPermissionClient>.toTransportOrder(): Set<OrderPermissions>? = this
     .map { it.toTransportOrder() }
     .toSet()
     .takeIf { it.isNotEmpty() }
 
-private fun OrderPermissionClient.toTransportOrder() = when (this) {
+internal fun OrderPermissionClient.toTransportOrder() = when (this) {
     OrderPermissionClient.READ -> OrderPermissions.READ
     OrderPermissionClient.UPDATE -> OrderPermissions.UPDATE
     OrderPermissionClient.DELETE -> OrderPermissions.DELETE
 }
 
-private fun OrderSide.toTransportOrder(): ru.otus.otuskotlin.crypto.trade.api.v1.models.OrderSide? = when (this) {
+internal fun OrderSide.toTransportOrder(): ru.otus.otuskotlin.crypto.trade.api.v1.models.OrderSide? = when (this) {
     OrderSide.BUY -> BUY
     OrderSide.SELL -> SELL
     OrderSide.NONE -> null
 }
 
-private fun List<OrderError>.toTransportErrors(): List<Error>? = this
+internal fun List<OrderError>.toTransportErrors(): List<Error>? = this
     .map { it.toTransportOrder() }
     .toList()
     .takeIf { it.isNotEmpty() }
 
-private fun OrderError.toTransportOrder() = Error(
+internal fun OrderError.toTransportOrder() = Error(
     code = code.takeIf { it.isNotBlank() },
     group = group.takeIf { it.isNotBlank() },
     field = field.takeIf { it.isNotBlank() },
     message = message.takeIf { it.isNotBlank() },
 )
 
-private fun OrderState.toResult(): ResponseResult? = when (this) {
+internal fun OrderState.toResult(): ResponseResult? = when (this) {
     OrderState.RUNNING -> ResponseResult.SUCCESS
     OrderState.FAILING -> ResponseResult.ERROR
     OrderState.FINISHING -> ResponseResult.SUCCESS

@@ -9,3 +9,8 @@ ktor:
         modules:
             - ru.otus.otuskotlin.crypto.trade.app.ApplicationKt.module
     logger: logback
+
+cryptotrade:
+    repository:
+        test: "inmemory"
+        prod: "$DB_TYPE_PROD:inmemory"
