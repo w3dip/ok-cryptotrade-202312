@@ -19,5 +19,5 @@ data class DbOrderResponseErrWithData(
     val data: Order,
     val errors: List<OrderError> = emptyList()
 ) : IDbOrderResponse {
-    constructor(ad: Order, err: OrderError) : this(ad, listOf(err))
+    constructor(order: Order, err: OrderError) : this(order, listOf(err))
 }

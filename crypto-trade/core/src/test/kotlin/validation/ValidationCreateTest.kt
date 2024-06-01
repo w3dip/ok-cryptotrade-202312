@@ -3,7 +3,7 @@ package ru.otus.otuskotlin.crypto.trade.core.validation
 import ru.otus.otuskotlin.crypto.trade.common.models.OrderCommand
 import kotlin.test.Test
 
-class BizValidationCreateTest : BaseBizValidationTest() {
+class ValidationCreateTest : BaseValidationTest() {
     override val command: OrderCommand = OrderCommand.CREATE
 
     @Test

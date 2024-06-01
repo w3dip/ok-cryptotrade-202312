@@ -11,12 +11,11 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 
-
-abstract class RepoOrderUpdateTest {
+abstract class OrderRepoUpdateTest {
     abstract val repo: OrderRepoInitialized
     protected open val updateSucc = initObjects[0]
     protected open val updateConc = initObjects[1]
-    protected val updateIdNotFound = OrderId("ad-repo-update-not-found")
+    protected val updateIdNotFound = OrderId("order-repo-update-not-found")
     protected val lockBad = OrderLock("20000000-0000-0000-0000-000000000009")
     protected val lockNew = OrderLock("20000000-0000-0000-0000-000000000002")
 

@@ -3,7 +3,7 @@ package ru.otus.otuskotlin.crypto.trade.repo.tests
 import ru.otus.otuskotlin.crypto.trade.common.models.Order
 import ru.otus.otuskotlin.crypto.trade.common.repo.*
 
-class OrderRepositoryMock(
+class OrderRepoMock(
     private val invokeCreateOrder: (DbOrderRequest) -> IDbOrderResponse = { DEFAULT_ORDER_SUCCESS_EMPTY_MOCK },
     private val invokeReadOrder: (DbOrderIdRequest) -> IDbOrderResponse = { DEFAULT_ORDER_SUCCESS_EMPTY_MOCK },
     private val invokeUpdateOrder: (DbOrderRequest) -> IDbOrderResponse = { DEFAULT_ORDER_SUCCESS_EMPTY_MOCK },

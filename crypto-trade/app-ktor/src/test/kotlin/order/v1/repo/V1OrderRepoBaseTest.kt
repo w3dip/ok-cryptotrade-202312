@@ -32,17 +32,11 @@ abstract class V1OrderRepoBaseTest {
 
     protected val uuidOld = "10000000-0000-0000-0000-000000000001"
     protected val uuidNew = "10000000-0000-0000-0000-000000000002"
-    protected val uuidSup = "10000000-0000-0000-0000-000000000003"
     protected val initOrder = OrderStub.prepareResult {
         id = OrderId(uuidOld)
         operationType = OrderSide.BUY
         lock = OrderLock(uuidOld)
     }
-    protected val initOrderSell = OrderStub.prepareResult {
-        id = OrderId(uuidSup)
-        operationType = OrderSide.SELL
-    }
-
 
     @Test
     fun create() {

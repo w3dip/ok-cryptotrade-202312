@@ -8,8 +8,8 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 
-class OrderRepositoryMockTest {
-    private val repo = OrderRepositoryMock(
+class OrderRepoMockTest {
+    private val repo = OrderRepoMock(
         invokeCreateOrder = { DbOrderResponseOk(OrderStub.prepareResult { secCode = "create" }) },
         invokeReadOrder = { DbOrderResponseOk(OrderStub.prepareResult { secCode = "read" }) },
         invokeUpdateOrder = { DbOrderResponseOk(OrderStub.prepareResult { secCode = "update" }) },

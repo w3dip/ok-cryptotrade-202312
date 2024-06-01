@@ -15,42 +15,49 @@ import java.math.BigDecimal.ZERO
 @Entity
 data class OrderCassandraDTO(
     @field:CqlName(COLUMN_ID)
-    @field:PartitionKey // можно задать порядок
+    @field:PartitionKey
     var id: String? = null,
+
     @field:CqlName(COLUMN_SEC_CODE)
     var secCode: String? = null,
+
     @field:CqlName(COLUMN_AGREEMENT_NUMBER)
     var agreementNumber: String? = null,
+
     @field:CqlName(COLUMN_QUANTITY)
     var quantity: String? = null,
+
     @field:CqlName(COLUMN_PRICE)
     var price: String? = null,
+
     @field:CqlName(COLUMN_USER_ID)
     var userId: String? = null,
+
     @field:CqlName(COLUMN_OPERATION_TYPE)
     var operationType: OrderSide? = null,
+
     @field:CqlName(COLUMN_LOCK)
     var lock: String?,
 ) {
     constructor(orderModel: Order) : this(
-        userId = orderModel.userId.takeIf { it != OrderUserId.NONE }?.asString(),
         id = orderModel.id.takeIf { it != OrderId.NONE }?.asString(),
         secCode = orderModel.secCode.takeIf { it.isNotBlank() },
         agreementNumber = orderModel.agreementNumber.takeIf { it.isNotBlank() },
         quantity = orderModel.quantity.takeIf { it != ZERO }?.toPlainString(),
         price = orderModel.price.takeIf { it != ZERO }?.toPlainString(),
+        userId = orderModel.userId.takeIf { it != OrderUserId.NONE }?.asString(),
         operationType = orderModel.operationType.toTransport(),
         lock = orderModel.lock.takeIf { it != OrderLock.NONE }?.asString()
     )
 
     fun toOrderModel(): Order =
         Order(
-            userId = userId?.let { OrderUserId(it) } ?: OrderUserId.NONE,
             id = id?.let { OrderId(it) } ?: OrderId.NONE,
             secCode = secCode ?: "",
             agreementNumber = agreementNumber ?: "",
             quantity = quantity?.let { BigDecimal(it) } ?: ZERO,
             price = price?.let { BigDecimal(it) } ?: ZERO,
+            userId = userId?.let { OrderUserId(it) } ?: OrderUserId.NONE,
             operationType = operationType.fromTransport(),
             lock = lock?.let { OrderLock(it) } ?: OrderLock.NONE
         )

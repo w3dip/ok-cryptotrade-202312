@@ -14,3 +14,10 @@ cryptotrade:
     repository:
         test: "inmemory"
         prod: "$DB_TYPE_PROD:inmemory"
+
+        cassandra:
+            hosts: localhost
+            keyspace: test_keyspace
+            pass: cassandra
+            port: 9042
+            user: cassandra

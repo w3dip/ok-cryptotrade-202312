@@ -7,7 +7,7 @@ import ru.otus.otuskotlin.crypto.trade.common.models.*
 import ru.otus.otuskotlin.crypto.trade.common.repo.DbOrderResponseOk
 import ru.otus.otuskotlin.crypto.trade.common.repo.errorNotFound
 import ru.otus.otuskotlin.crypto.trade.core.OrderProcessor
-import ru.otus.otuskotlin.crypto.trade.repo.tests.OrderRepositoryMock
+import ru.otus.otuskotlin.crypto.trade.repo.tests.OrderRepoMock
 import java.math.BigDecimal
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -20,7 +20,8 @@ private val initOrder = Order(
     price = BigDecimal.valueOf(120000),
     operationType = OrderSide.BUY,
 )
-private val repo = OrderRepositoryMock(
+
+private val repo = OrderRepoMock(
     invokeReadOrder = {
         if (it.id == initOrder.id) {
             DbOrderResponseOk(

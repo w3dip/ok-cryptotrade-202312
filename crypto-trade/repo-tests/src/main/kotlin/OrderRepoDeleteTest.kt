@@ -12,7 +12,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 
-abstract class RepoOrderDeleteTest {
+abstract class OrderRepoDeleteTest {
     abstract val repo: OrderRepoInitialized
     protected open val deleteSucc = initObjects[0]
     protected open val deleteConc = initObjects[1]

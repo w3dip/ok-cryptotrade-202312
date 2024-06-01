@@ -6,7 +6,7 @@ import ru.otus.otuskotlin.crypto.trade.common.models.OrderState
 import ru.otus.otuskotlin.crypto.trade.common.models.OrderWorkMode
 import ru.otus.otuskotlin.crypto.trade.core.OrderProcessor
 import ru.otus.otuskotlin.crypto.trade.stubs.OrderStub
-import validation.runBizTest
+import validation.runValidationTest
 import java.math.BigDecimal
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
@@ -14,7 +14,7 @@ import kotlin.test.assertNotEquals
 
 private val stub = OrderStub.get()
 
-fun validationQuantityCorrect(command: OrderCommand, processor: OrderProcessor) = runBizTest {
+fun validationQuantityCorrect(command: OrderCommand, processor: OrderProcessor) = runValidationTest {
     val ctx = OrderContext(
         command = command,
         state = OrderState.NONE,
@@ -27,7 +27,7 @@ fun validationQuantityCorrect(command: OrderCommand, processor: OrderProcessor) 
     assertEquals(OrderStub.get().quantity, ctx.orderValidated.quantity)
 }
 
-fun validationQuantityNegative(command: OrderCommand, processor: OrderProcessor) = runBizTest {
+fun validationQuantityNegative(command: OrderCommand, processor: OrderProcessor) = runValidationTest {
     val ctx = OrderContext(
         command = command,
         state = OrderState.NONE,
@@ -44,7 +44,7 @@ fun validationQuantityNegative(command: OrderCommand, processor: OrderProcessor)
     assertContains(error?.message ?: "", "quantity")
 }
 
-fun validationQuantityZero(command: OrderCommand, processor: OrderProcessor) = runBizTest {
+fun validationQuantityZero(command: OrderCommand, processor: OrderProcessor) = runValidationTest {
     val ctx = OrderContext(
         command = command,
         state = OrderState.NONE,

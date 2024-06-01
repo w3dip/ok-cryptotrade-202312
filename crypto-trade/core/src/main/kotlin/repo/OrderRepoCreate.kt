@@ -12,7 +12,7 @@ import ru.otus.otuskotlin.crypto.trade.cor.worker
 
 fun CorChainDsl<OrderContext>.repoCreate(title: String) = worker {
     this.title = title
-    description = "Добавление объявления в БД"
+    description = "Добавление заявки в БД"
     on { state == OrderState.RUNNING }
     handle {
         val request = DbOrderRequest(orderRepoPrepare)

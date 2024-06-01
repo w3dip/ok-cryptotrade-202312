@@ -6,14 +6,14 @@ import ru.otus.otuskotlin.crypto.trade.common.models.OrderState
 import ru.otus.otuskotlin.crypto.trade.common.models.OrderWorkMode
 import ru.otus.otuskotlin.crypto.trade.core.OrderProcessor
 import ru.otus.otuskotlin.crypto.trade.stubs.OrderStub
-import validation.runBizTest
+import validation.runValidationTest
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 private val stub = OrderStub.get()
 
-fun validationSecCodeCorrect(command: OrderCommand, processor: OrderProcessor) = runBizTest {
+fun validationSecCodeCorrect(command: OrderCommand, processor: OrderProcessor) = runValidationTest {
     val ctx = OrderContext(
         command = command,
         state = OrderState.NONE,
@@ -26,7 +26,7 @@ fun validationSecCodeCorrect(command: OrderCommand, processor: OrderProcessor) =
     assertContains(ctx.orderValidated.secCode, "BTC")
 }
 
-fun validationSecCodeTrim(command: OrderCommand, processor: OrderProcessor) = runBizTest {
+fun validationSecCodeTrim(command: OrderCommand, processor: OrderProcessor) = runValidationTest {
     val ctx = OrderContext(
         command = command,
         state = OrderState.NONE,
@@ -41,7 +41,7 @@ fun validationSecCodeTrim(command: OrderCommand, processor: OrderProcessor) = ru
     assertEquals("abc", ctx.orderValidated.secCode)
 }
 
-fun validationSecCodeEmpty(command: OrderCommand, processor: OrderProcessor) = runBizTest {
+fun validationSecCodeEmpty(command: OrderCommand, processor: OrderProcessor) = runValidationTest {
     val ctx = OrderContext(
         command = command,
         state = OrderState.NONE,
@@ -58,7 +58,7 @@ fun validationSecCodeEmpty(command: OrderCommand, processor: OrderProcessor) = r
     assertContains(error?.message ?: "", "secCode")
 }
 
-fun validationSecCodeSymbols(command: OrderCommand, processor: OrderProcessor) = runBizTest {
+fun validationSecCodeSymbols(command: OrderCommand, processor: OrderProcessor) = runValidationTest {
     val ctx = OrderContext(
         command = command,
         state = OrderState.NONE,

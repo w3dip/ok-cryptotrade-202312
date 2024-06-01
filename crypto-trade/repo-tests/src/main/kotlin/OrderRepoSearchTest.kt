@@ -11,7 +11,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertIs
 
 
-abstract class RepoOrderSearchTest {
+abstract class OrderRepoSearchTest {
     abstract val repo: OrderRepoInitialized
 
     protected open val initializedObjects: List<Order> = initObjects

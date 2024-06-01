@@ -1,20 +1,20 @@
-package ru.otus.otuskotlin.crypto.trade.core.repo
+package ru.otus.otuskotlin.marketplace.biz.repo
 
 import CorSettings
 import kotlinx.coroutines.test.runTest
 import ru.otus.otuskotlin.crypto.trade.common.OrderContext
 import ru.otus.otuskotlin.crypto.trade.common.models.*
-import ru.otus.otuskotlin.crypto.trade.common.repo.DbOrderResponseOk
+import ru.otus.otuskotlin.crypto.trade.common.repo.DbOrdersResponseOk
 import ru.otus.otuskotlin.crypto.trade.core.OrderProcessor
-import ru.otus.otuskotlin.crypto.trade.repo.tests.OrderRepositoryMock
+import ru.otus.otuskotlin.crypto.trade.repo.tests.OrderRepoMock
 import java.math.BigDecimal
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class BizRepoReadTest {
+class OrderRepoSearchTest {
 
     private val userId = OrderUserId("321")
-    private val command = OrderCommand.READ
+    private val command = OrderCommand.SEARCH
     private val initOrder = Order(
         id = OrderId("123"),
         secCode = "abc",
@@ -24,10 +24,10 @@ class BizRepoReadTest {
         operationType = OrderSide.BUY,
         userId = userId,
     )
-    private val repo = OrderRepositoryMock(
-        invokeReadOrder = {
-            DbOrderResponseOk(
-                data = initOrder,
+    private val repo = OrderRepoMock(
+        invokeSearchOrder = {
+            DbOrdersResponseOk(
+                data = listOf(initOrder),
             )
         }
     )
@@ -35,25 +35,18 @@ class BizRepoReadTest {
     private val processor = OrderProcessor(settings)
 
     @Test
-    fun repoReadSuccessTest() = runTest {
+    fun repoSearchSuccessTest() = runTest {
         val ctx = OrderContext(
             command = command,
             state = OrderState.NONE,
             workMode = OrderWorkMode.TEST,
-            orderRequest = Order(
-                id = OrderId("123"),
+            orderFilterRequest = OrderFilter(
+                searchString = "abc",
+                operationType = OrderSide.BUY
             ),
         )
         processor.exec(ctx)
         assertEquals(OrderState.FINISHING, ctx.state)
-        assertEquals(initOrder.id, ctx.orderResponse.id)
-        assertEquals(initOrder.secCode, ctx.orderResponse.secCode)
-        assertEquals(initOrder.agreementNumber, ctx.orderResponse.agreementNumber)
-        assertEquals(initOrder.quantity, ctx.orderResponse.quantity)
-        assertEquals(initOrder.price, ctx.orderResponse.price)
-        assertEquals(initOrder.operationType, ctx.orderResponse.operationType)
+        assertEquals(1, ctx.ordersResponse.size)
     }
-
-    @Test
-    fun repoReadNotFoundTest() = repoNotFoundTest(command)
 }

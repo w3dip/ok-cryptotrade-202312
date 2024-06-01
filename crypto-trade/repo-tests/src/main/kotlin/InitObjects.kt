@@ -1,5 +1,5 @@
 package ru.otus.otuskotlin.crypto.trade.repo.tests
 
-internal interface IInitObjects<T> {
+internal interface InitObjects<T> {
     val initObjects: List<T>
 }

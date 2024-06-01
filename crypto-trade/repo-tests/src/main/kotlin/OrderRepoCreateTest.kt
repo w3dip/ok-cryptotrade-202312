@@ -10,14 +10,13 @@ import kotlin.test.assertEquals
 import kotlin.test.assertIs
 import kotlin.test.assertNotEquals
 
-
-abstract class RepoOrderCreateTest {
+abstract class OrderRepoCreateTest {
     abstract val repo: OrderRepoInitialized
     protected open val lockNew = OrderLock("20000000-0000-0000-0000-000000000002")
 
     private val createObj = Order(
         secCode = "test sec code",
-        agreementNumber = "test agreemnet number",
+        agreementNumber = "test agreement number",
         userId = OrderUserId("user-123"),
         quantity = BigDecimal.valueOf(200),
         price = BigDecimal.valueOf(30000),

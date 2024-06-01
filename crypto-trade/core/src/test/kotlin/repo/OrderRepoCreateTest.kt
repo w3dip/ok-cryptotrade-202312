@@ -6,18 +6,18 @@ import ru.otus.otuskotlin.crypto.trade.common.OrderContext
 import ru.otus.otuskotlin.crypto.trade.common.models.*
 import ru.otus.otuskotlin.crypto.trade.common.repo.DbOrderResponseOk
 import ru.otus.otuskotlin.crypto.trade.core.OrderProcessor
-import ru.otus.otuskotlin.crypto.trade.repo.tests.OrderRepositoryMock
+import ru.otus.otuskotlin.crypto.trade.repo.tests.OrderRepoMock
 import java.math.BigDecimal
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
-class BizRepoCreateTest {
+class OrderRepoCreateTest {
 
     private val userId = OrderUserId("321")
     private val command = OrderCommand.CREATE
     private val uuid = "10000000-0000-0000-0000-000000000001"
-    private val repo = OrderRepositoryMock(
+    private val repo = OrderRepoMock(
         invokeCreateOrder = {
             DbOrderResponseOk(
                 data = Order(
@@ -56,6 +56,8 @@ class BizRepoCreateTest {
         assertNotEquals(OrderId.NONE, ctx.orderResponse.id)
         assertEquals("abc", ctx.orderResponse.secCode)
         assertEquals("abc", ctx.orderResponse.agreementNumber)
+        assertEquals(BigDecimal.valueOf(1100), ctx.orderResponse.quantity)
+        assertEquals(BigDecimal.valueOf(120000), ctx.orderResponse.price)
         assertEquals(OrderSide.BUY, ctx.orderResponse.operationType)
     }
 }

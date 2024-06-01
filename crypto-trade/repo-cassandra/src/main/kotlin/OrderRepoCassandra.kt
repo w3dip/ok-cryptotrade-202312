@@ -14,14 +14,14 @@ import ru.otus.otuskotlin.crypto.trade.common.models.OrderLock
 import ru.otus.otuskotlin.crypto.trade.common.repo.*
 import ru.otus.otuskotlin.crypto.trade.repo.cassandra.model.OrderCassandraDTO
 import ru.otus.otuskotlin.crypto.trade.repo.cassandra.model.OrderSide
-import ru.otus.otuskotlin.crypto.trade.repo.common.IRepoOrderInitializable
+import ru.otus.otuskotlin.crypto.trade.repo.common.OrderRepoInitializable
 import java.net.InetAddress
 import java.net.InetSocketAddress
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
-class RepoOrderCassandra(
+class OrderRepoCassandra(
     private val keyspaceName: String,
     private val host: String = "",
     private val port: Int = 9042,
@@ -31,7 +31,7 @@ class RepoOrderCassandra(
     private val timeout: Duration = 30.toDuration(DurationUnit.SECONDS),
     private val randomUuid: () -> String = { uuid4().toString() },
     initObjects: Collection<Order> = emptyList(),
-) : OrderRepoBase(), IRepoOrder, IRepoOrderInitializable {
+) : OrderRepoBase(), IRepoOrder, OrderRepoInitializable {
     private val codecRegistry by lazy {
         DefaultCodecRegistry("default").apply {
             register(EnumNameCodec(OrderSide::class.java))
@@ -104,9 +104,7 @@ class RepoOrderCassandra(
             ?.getString(OrderCassandraDTO.COLUMN_LOCK)
             ?.takeIf { it.isNotBlank() }
         when {
-            // Два варианта почти эквивалентны, выбирайте который вам больше подходит
             isSuccess -> DbOrderResponseOk(new)
-            // res.wasApplied() -> DbAdResponse.success(dao.read(idStr).await()?.toAdModel())
             resultField == null -> errorNotFound(rq.order.id)
             else -> errorRepoConcurrency(
                 oldOrder = dao.read(idStr).await()?.toOrderModel() ?: throw Exception(

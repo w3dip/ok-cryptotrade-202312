@@ -12,7 +12,7 @@ import ru.otus.otuskotlin.crypto.trade.core.exceptions.OrderDbNotConfiguredExcep
 fun CorChainDsl<OrderContext>.initRepo(title: String) = worker {
     this.title = title
     description = """
-        Вычисление основного рабочего репозитория в зависимости от зпрошенного режима работы        
+        Вычисление основного рабочего репозитория в зависимости от запрошенного режима работы        
     """.trimIndent()
     handle {
         orderRepo = when {

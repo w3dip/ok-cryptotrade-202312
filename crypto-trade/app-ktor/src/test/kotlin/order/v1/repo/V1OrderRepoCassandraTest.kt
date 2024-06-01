@@ -8,7 +8,7 @@ import org.testcontainers.containers.CassandraContainer
 import ru.otus.otuskotlin.crypto.trade.api.v1.models.OrderRequestDebugMode
 import ru.otus.otuskotlin.crypto.trade.app.AppSettings
 import ru.otus.otuskotlin.crypto.trade.common.repo.IRepoOrder
-import ru.otus.otuskotlin.crypto.trade.repo.cassandra.RepoOrderCassandra
+import ru.otus.otuskotlin.crypto.trade.repo.cassandra.OrderRepoCassandra
 import ru.otus.otuskotlin.crypto.trade.repo.common.OrderRepoInitialized
 import java.time.Duration
 
@@ -52,7 +52,6 @@ class V1OrderRepoCassandraTest : V1OrderRepoBaseTest() {
         class TestCasandraContainer : CassandraContainer<TestCasandraContainer>("cassandra:3.11.2")
 
         private val container by lazy {
-            @Suppress("Since15")
             TestCasandraContainer().withStartupTimeout(Duration.ofSeconds(300L))
         }
 
@@ -68,8 +67,8 @@ class V1OrderRepoCassandraTest : V1OrderRepoBaseTest() {
             container.stop()
         }
 
-        fun repository(keyspace: String, uuid: String? = null): RepoOrderCassandra {
-            return RepoOrderCassandra(
+        fun repository(keyspace: String, uuid: String? = null): OrderRepoCassandra {
+            return OrderRepoCassandra(
                 keyspaceName = keyspace,
                 host = container.host,
                 port = container.getMappedPort(CassandraContainer.CQL_PORT),

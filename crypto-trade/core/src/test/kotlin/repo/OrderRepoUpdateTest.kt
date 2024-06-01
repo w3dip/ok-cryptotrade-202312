@@ -6,12 +6,12 @@ import ru.otus.otuskotlin.crypto.trade.common.OrderContext
 import ru.otus.otuskotlin.crypto.trade.common.models.*
 import ru.otus.otuskotlin.crypto.trade.common.repo.DbOrderResponseOk
 import ru.otus.otuskotlin.crypto.trade.core.OrderProcessor
-import ru.otus.otuskotlin.crypto.trade.repo.tests.OrderRepositoryMock
+import ru.otus.otuskotlin.crypto.trade.repo.tests.OrderRepoMock
 import java.math.BigDecimal
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class BizRepoUpdateTest {
+class OrderRepoUpdateTest {
 
     private val userId = OrderUserId("321")
     private val command = OrderCommand.UPDATE
@@ -25,7 +25,7 @@ class BizRepoUpdateTest {
         userId = userId,
         lock = OrderLock("123-234-abc-ABC"),
     )
-    private val repo = OrderRepositoryMock(
+    private val repo = OrderRepoMock(
         invokeReadOrder = {
             DbOrderResponseOk(
                 data = initOrder,

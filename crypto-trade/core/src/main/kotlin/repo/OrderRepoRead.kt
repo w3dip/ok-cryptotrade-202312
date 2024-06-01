@@ -12,7 +12,7 @@ import ru.otus.otuskotlin.crypto.trade.cor.worker
 
 fun CorChainDsl<OrderContext>.repoRead(title: String) = worker {
     this.title = title
-    description = "Чтение объявления из БД"
+    description = "Чтение заявки из БД"
     on { state == OrderState.RUNNING }
     handle {
         val request = DbOrderIdRequest(orderValidated)

@@ -37,7 +37,7 @@ fun errorRepoConcurrency(
         actualLock = oldOrder.lock,
     ),
 ) = DbOrderResponseErrWithData(
-    ad = oldOrder,
+    order = oldOrder,
     err = OrderError(
         code = "$ERROR_GROUP_REPO-concurrency",
         group = ERROR_GROUP_REPO,

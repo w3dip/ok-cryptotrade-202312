@@ -6,14 +6,14 @@ import ru.otus.otuskotlin.crypto.trade.common.models.OrderState
 import ru.otus.otuskotlin.crypto.trade.common.models.OrderWorkMode
 import ru.otus.otuskotlin.crypto.trade.core.OrderProcessor
 import ru.otus.otuskotlin.crypto.trade.stubs.OrderStub
-import validation.runBizTest
+import validation.runValidationTest
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 private val stub = OrderStub.get()
 
-fun validationAgreementNumberCorrect(command: OrderCommand, processor: OrderProcessor) = runBizTest {
+fun validationAgreementNumberCorrect(command: OrderCommand, processor: OrderProcessor) = runValidationTest {
     val ctx = OrderContext(
         command = command,
         state = OrderState.NONE,
@@ -26,7 +26,7 @@ fun validationAgreementNumberCorrect(command: OrderCommand, processor: OrderProc
     assertContains(ctx.orderValidated.agreementNumber, "A001")
 }
 
-fun validationAgreementNumberTrim(command: OrderCommand, processor: OrderProcessor) = runBizTest {
+fun validationAgreementNumberTrim(command: OrderCommand, processor: OrderProcessor) = runValidationTest {
     val ctx = OrderContext(
         command = command,
         state = OrderState.NONE,
@@ -41,7 +41,7 @@ fun validationAgreementNumberTrim(command: OrderCommand, processor: OrderProcess
     assertEquals("abc", ctx.orderValidated.agreementNumber)
 }
 
-fun validationAgreementNumberEmpty(command: OrderCommand, processor: OrderProcessor) = runBizTest {
+fun validationAgreementNumberEmpty(command: OrderCommand, processor: OrderProcessor) = runValidationTest {
     val ctx = OrderContext(
         command = command,
         state = OrderState.NONE,
@@ -58,7 +58,7 @@ fun validationAgreementNumberEmpty(command: OrderCommand, processor: OrderProces
     assertContains(error?.message ?: "", "agreementNumber")
 }
 
-fun validationAgreementNumberSymbols(command: OrderCommand, processor: OrderProcessor) = runBizTest {
+fun validationAgreementNumberSymbols(command: OrderCommand, processor: OrderProcessor) = runValidationTest {
     val ctx = OrderContext(
         command = command,
         state = OrderState.NONE,

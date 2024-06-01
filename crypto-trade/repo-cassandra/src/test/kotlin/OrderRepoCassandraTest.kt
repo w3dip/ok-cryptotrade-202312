@@ -6,35 +6,35 @@ import ru.otus.otuskotlin.crypto.trade.repo.common.OrderRepoInitialized
 import ru.otus.otuskotlin.crypto.trade.repo.tests.*
 import java.time.Duration
 
-class RepoOrderCassandraCreateTest : RepoOrderCreateTest() {
+class OrderCassandraRepoCreateTest : OrderRepoCreateTest() {
     override val repo = OrderRepoInitialized(
         initObjects = initObjects,
         repo = TestCompanion.repository("ks_create", lockNew.asString())
     )
 }
 
-class RepoOrderCassandraReadTest : RepoOrderReadTest() {
+class OrderCassandraRepoReadTest : OrderRepoReadTest() {
     override val repo = OrderRepoInitialized(
         initObjects = initObjects,
         repo = TestCompanion.repository("ks_read")
     )
 }
 
-class RepoOrderCassandraUpdateTest : RepoOrderUpdateTest() {
+class OrderCassandraRepoUpdateTest : OrderRepoUpdateTest() {
     override val repo = OrderRepoInitialized(
         initObjects = initObjects,
         repo = TestCompanion.repository("ks_update", lockNew.asString())
     )
 }
 
-class RepoOrderCassandraDeleteTest : RepoOrderDeleteTest() {
+class OrderCassandraRepoDeleteTest : OrderRepoDeleteTest() {
     override val repo = OrderRepoInitialized(
         initObjects = initObjects,
         repo = TestCompanion.repository("ks_delete")
     )
 }
 
-class RepoOrderCassandraSearchTest : RepoOrderSearchTest() {
+class OrderCassandraRepoSearchTest : OrderRepoSearchTest() {
     override val repo = OrderRepoInitialized(
         initObjects = initObjects,
         repo = TestCompanion.repository("ks_search")
@@ -49,8 +49,8 @@ object TestCompanion {
             .also { it.start() }
     }
 
-    fun repository(keyspace: String, uuid: String? = null): RepoOrderCassandra {
-        return RepoOrderCassandra(
+    fun repository(keyspace: String, uuid: String? = null): OrderRepoCassandra {
+        return OrderRepoCassandra(
             keyspaceName = keyspace,
             host = container.host,
             port = container.getMappedPort(CassandraContainer.CQL_PORT),

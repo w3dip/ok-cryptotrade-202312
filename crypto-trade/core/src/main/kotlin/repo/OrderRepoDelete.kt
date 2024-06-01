@@ -12,7 +12,7 @@ import ru.otus.otuskotlin.crypto.trade.cor.worker
 
 fun CorChainDsl<OrderContext>.repoDelete(title: String) = worker {
     this.title = title
-    description = "Удаление объявления из БД по ID"
+    description = "Удаление заявки из БД по ID"
     on { state == OrderState.RUNNING }
     handle {
         val request = DbOrderIdRequest(orderRepoPrepare)

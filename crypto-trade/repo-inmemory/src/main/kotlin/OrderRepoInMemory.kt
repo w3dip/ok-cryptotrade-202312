@@ -7,14 +7,14 @@ import kotlinx.coroutines.sync.withLock
 import ru.otus.otuskotlin.crypto.trade.common.models.*
 import ru.otus.otuskotlin.crypto.trade.common.repo.*
 import ru.otus.otuskotlin.crypto.trade.common.repo.exceptions.RepoEmptyLockException
-import ru.otus.otuskotlin.crypto.trade.repo.common.IRepoOrderInitializable
+import ru.otus.otuskotlin.crypto.trade.repo.common.OrderRepoInitializable
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 
 class OrderRepoInMemory(
     ttl: Duration = 2.minutes,
     val randomUuid: () -> String = { uuid4().toString() },
-) : OrderRepoBase(), IRepoOrder, IRepoOrderInitializable {
+) : OrderRepoBase(), IRepoOrder, OrderRepoInitializable {
 
     private val mutex: Mutex = Mutex()
     private val cache = Cache.Builder<String, OrderEntity>()

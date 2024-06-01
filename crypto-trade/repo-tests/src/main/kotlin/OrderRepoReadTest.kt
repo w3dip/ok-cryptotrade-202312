@@ -12,7 +12,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertIs
 
 
-abstract class RepoOrderReadTest {
+abstract class OrderRepoReadTest {
     abstract val repo: OrderRepoInitialized
     protected open val readSucc = initObjects[0]
 

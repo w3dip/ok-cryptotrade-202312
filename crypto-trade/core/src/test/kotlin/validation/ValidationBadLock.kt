@@ -7,12 +7,12 @@ import ru.otus.otuskotlin.crypto.trade.common.models.OrderState
 import ru.otus.otuskotlin.crypto.trade.common.models.OrderWorkMode
 import ru.otus.otuskotlin.crypto.trade.core.OrderProcessor
 import ru.otus.otuskotlin.crypto.trade.stubs.OrderStub
-import validation.runBizTest
+import validation.runValidationTest
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
-fun validationLockCorrect(command: OrderCommand, processor: OrderProcessor) = runBizTest {
+fun validationLockCorrect(command: OrderCommand, processor: OrderProcessor) = runValidationTest {
     val ctx = OrderContext(
         command = command,
         state = OrderState.NONE,
@@ -24,7 +24,7 @@ fun validationLockCorrect(command: OrderCommand, processor: OrderProcessor) = ru
     assertNotEquals(OrderState.FAILING, ctx.state)
 }
 
-fun validationLockTrim(command: OrderCommand, processor: OrderProcessor) = runBizTest {
+fun validationLockTrim(command: OrderCommand, processor: OrderProcessor) = runValidationTest {
     val ctx = OrderContext(
         command = command,
         state = OrderState.NONE,
@@ -38,7 +38,7 @@ fun validationLockTrim(command: OrderCommand, processor: OrderProcessor) = runBi
     assertNotEquals(OrderState.FAILING, ctx.state)
 }
 
-fun validationLockEmpty(command: OrderCommand, processor: OrderProcessor) = runBizTest {
+fun validationLockEmpty(command: OrderCommand, processor: OrderProcessor) = runValidationTest {
     val ctx = OrderContext(
         command = command,
         state = OrderState.NONE,
@@ -55,7 +55,7 @@ fun validationLockEmpty(command: OrderCommand, processor: OrderProcessor) = runB
     assertContains(error?.message ?: "", "id")
 }
 
-fun validationLockFormat(command: OrderCommand, processor: OrderProcessor) = runBizTest {
+fun validationLockFormat(command: OrderCommand, processor: OrderProcessor) = runValidationTest {
     val ctx = OrderContext(
         command = command,
         state = OrderState.NONE,

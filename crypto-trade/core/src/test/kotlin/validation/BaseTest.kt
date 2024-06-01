@@ -6,7 +6,7 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalCoroutinesApi::class)
-fun runBizTest(block: suspend () -> Unit) = runTest {
+fun runValidationTest(block: suspend () -> Unit) = runTest {
     withContext(Dispatchers.Default.limitedParallelism(1)) {
         block()
     }

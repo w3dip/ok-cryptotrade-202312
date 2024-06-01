@@ -7,7 +7,7 @@ import ru.otus.otuskotlin.crypto.trade.repo.common.OrderRepoInitialized
 import ru.otus.otuskotlin.crypto.trade.repo.inmemory.OrderRepoInMemory
 import ru.otus.otuskotlin.crypto.trade.stubs.OrderStub
 
-abstract class BaseBizValidationTest {
+abstract class BaseValidationTest {
     protected abstract val command: OrderCommand
     private val repo = OrderRepoInitialized(
         repo = OrderRepoInMemory(),

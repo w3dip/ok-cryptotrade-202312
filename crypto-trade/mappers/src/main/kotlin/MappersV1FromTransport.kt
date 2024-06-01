@@ -20,7 +20,6 @@ fun OrderContext.fromTransport(request: IRequest) = when (request) {
 }
 
 private fun String?.toOrderId() = this?.let { OrderId(it) } ?: OrderId.NONE
-private fun String?.toOrderWithId() = Order(id = this.toOrderId())
 private fun String?.toOrderLock() = this?.let { OrderLock(it) } ?: OrderLock.NONE
 
 private fun OrderDebug?.transportToWorkMode(): OrderWorkMode = when (this?.mode) {
