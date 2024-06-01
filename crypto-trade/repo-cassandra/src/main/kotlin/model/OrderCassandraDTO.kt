@@ -25,10 +25,10 @@ data class OrderCassandraDTO(
     var agreementNumber: String? = null,
 
     @field:CqlName(COLUMN_QUANTITY)
-    var quantity: String? = null,
+    var quantity: BigDecimal? = null,
 
     @field:CqlName(COLUMN_PRICE)
-    var price: String? = null,
+    var price: BigDecimal? = null,
 
     @field:CqlName(COLUMN_USER_ID)
     var userId: String? = null,
@@ -43,8 +43,8 @@ data class OrderCassandraDTO(
         id = orderModel.id.takeIf { it != OrderId.NONE }?.asString(),
         secCode = orderModel.secCode.takeIf { it.isNotBlank() },
         agreementNumber = orderModel.agreementNumber.takeIf { it.isNotBlank() },
-        quantity = orderModel.quantity.takeIf { it != ZERO }?.toPlainString(),
-        price = orderModel.price.takeIf { it != ZERO }?.toPlainString(),
+        quantity = orderModel.quantity.takeIf { it != ZERO },
+        price = orderModel.price.takeIf { it != ZERO },
         userId = orderModel.userId.takeIf { it != OrderUserId.NONE }?.asString(),
         operationType = orderModel.operationType.toTransport(),
         lock = orderModel.lock.takeIf { it != OrderLock.NONE }?.asString()
@@ -55,8 +55,8 @@ data class OrderCassandraDTO(
             id = id?.let { OrderId(it) } ?: OrderId.NONE,
             secCode = secCode ?: "",
             agreementNumber = agreementNumber ?: "",
-            quantity = quantity?.let { BigDecimal(it) } ?: ZERO,
-            price = price?.let { BigDecimal(it) } ?: ZERO,
+            quantity = quantity ?: ZERO,
+            price = price ?: ZERO,
             userId = userId?.let { OrderUserId(it) } ?: OrderUserId.NONE,
             operationType = operationType.fromTransport(),
             lock = lock?.let { OrderLock(it) } ?: OrderLock.NONE
@@ -81,8 +81,8 @@ data class OrderCassandraDTO(
                 .withPartitionKey(COLUMN_ID, DataTypes.TEXT)
                 .withColumn(COLUMN_SEC_CODE, DataTypes.TEXT)
                 .withColumn(COLUMN_AGREEMENT_NUMBER, DataTypes.TEXT)
-                .withColumn(COLUMN_QUANTITY, DataTypes.TEXT)
-                .withColumn(COLUMN_PRICE, DataTypes.TEXT)
+                .withColumn(COLUMN_QUANTITY, DataTypes.DECIMAL)
+                .withColumn(COLUMN_PRICE, DataTypes.DECIMAL)
                 .withColumn(COLUMN_USER_ID, DataTypes.TEXT)
                 .withColumn(COLUMN_OPERATION_TYPE, DataTypes.TEXT)
                 .withColumn(COLUMN_LOCK, DataTypes.TEXT)
