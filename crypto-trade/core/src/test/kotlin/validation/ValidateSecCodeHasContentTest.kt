@@ -1,17 +1,17 @@
 package ru.otus.otuskotlin.crypto.trade.core.validation
 
-import kotlinx.coroutines.test.runTest
 import ru.otus.otuskotlin.crypto.trade.common.OrderContext
 import ru.otus.otuskotlin.crypto.trade.common.models.Order
 import ru.otus.otuskotlin.crypto.trade.common.models.OrderFilter
 import ru.otus.otuskotlin.crypto.trade.common.models.OrderState
 import ru.otus.otuskotlin.crypto.trade.cor.rootChain
+import validation.runValidationTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class ValidateSecCodeHasContentTest {
     @Test
-    fun emptyString() = runTest {
+    fun emptyString() = runValidationTest {
         val ctx = OrderContext(state = OrderState.RUNNING, orderValidating = Order(secCode = ""))
         chain.exec(ctx)
         assertEquals(OrderState.RUNNING, ctx.state)
@@ -19,7 +19,7 @@ class ValidateSecCodeHasContentTest {
     }
 
     @Test
-    fun noContent() = runTest {
+    fun noContent() = runValidationTest {
         val ctx = OrderContext(state = OrderState.RUNNING, orderValidating = Order(secCode = "12!@#$%^&*()_+-="))
         chain.exec(ctx)
         assertEquals(OrderState.FAILING, ctx.state)
@@ -28,7 +28,7 @@ class ValidateSecCodeHasContentTest {
     }
 
     @Test
-    fun normalString() = runTest {
+    fun normalString() = runValidationTest {
         val ctx = OrderContext(state = OrderState.RUNNING, orderFilterValidating = OrderFilter(searchString = "Ж"))
         chain.exec(ctx)
         assertEquals(OrderState.RUNNING, ctx.state)

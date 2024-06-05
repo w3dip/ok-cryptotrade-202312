@@ -14,4 +14,6 @@ dependencies {
 
     api(libs.coroutines.test)
     testImplementation(kotlin("test-junit"))
+    testImplementation(projects.repoTests)
+    testImplementation(projects.repoInmemory)
 }

@@ -18,7 +18,8 @@ object OrderStub {
                 OrderPermissionClient.READ,
                 OrderPermissionClient.UPDATE,
                 OrderPermissionClient.DELETE,
-            )
+            ),
+            lock = OrderLock("123-234-abc-ABC"),
         )
     val ORDER_SELL = ORDER_BUY.copy(operationType = OrderSide.SELL)
 

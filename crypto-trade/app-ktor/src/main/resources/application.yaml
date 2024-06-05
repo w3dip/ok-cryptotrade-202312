@@ -9,3 +9,15 @@ ktor:
         modules:
             - ru.otus.otuskotlin.crypto.trade.app.ApplicationKt.module
     logger: logback
+
+cryptotrade:
+    repository:
+        test: "inmemory"
+        prod: "$DB_TYPE_PROD:inmemory"
+
+        cassandra:
+            hosts: localhost
+            keyspace: test_keyspace
+            pass: cassandra
+            port: 9042
+            user: cassandra

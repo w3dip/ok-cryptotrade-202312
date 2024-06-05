@@ -10,7 +10,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
-class BizValidationSearchTest : BaseBizValidationTest() {
+class ValidationSearchTest : BaseValidationTest() {
     override val command = OrderCommand.SEARCH
 
     @Test

@@ -17,6 +17,8 @@ kermit = "2.0.3"
 # Frameworks
 ktor = "2.3.9"
 
+cassandra = "4.17.0"
+
 # Docker
 testcontainers = "1.19.7"
 muschko = "9.4.0"
@@ -37,8 +39,10 @@ kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+coroutines-jdk9 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk9", version.ref = "coroutines" }
 apache-commons-lang3 = { module = "org.apache.commons:commons-lang3", version.ref = "apache-commons-lang3" }
 cor = { module = "ru.otus.otuskotlin.cryptotrade.libs:cor" }
+uuid = "com.benasher44:uuid:0.8.4"
 
 jackson-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
 jackson-datatype = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson" }
@@ -71,6 +75,13 @@ ktor-client-negotiation = { module = "io.ktor:ktor-client-content-negotiation" }
 # Message Queues
 kafka-client = { module = "org.apache.kafka:kafka-clients", version = "3.7.0" }
 
+# Databases
+db-cache4k = "io.github.reactivecircus.cache4k:cache4k:0.13.0"
+db-cassandra-core = { module = "com.datastax.oss:java-driver-core", version.ref = "cassandra" }
+db-cassandra-qbuilder = { module = "com.datastax.oss:java-driver-query-builder", version.ref = "cassandra" }
+db-cassandra-kapt = { module = "com.datastax.oss:java-driver-mapper-processor", version.ref = "cassandra" }
+db-cassandra-mapper = { module = "com.datastax.oss:java-driver-mapper-runtime", version.ref = "cassandra" }
+
 # Testing
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 
@@ -80,13 +91,16 @@ kotest-datatest = { module = "io.kotest:kotest-framework-datatest", version.ref 
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
 
 testcontainers-core = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers" }
+testcontainers-cassandra = { module = "org.testcontainers:cassandra", version.ref = "testcontainers" }
 
 [bundles]
 kotest = ["kotest-junit5", "kotest-core", "kotest-datatest", "kotest-property"]
+cassandra = ["db-cassandra-core", "db-cassandra-mapper", "db-cassandra-qbuilder"]
 
 [plugins]
 kotlin-multiplatform = {id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin"}
 kotlin-jvm = {id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin"}
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 openapi-generator = { id = "org.openapi.generator", version.ref = "openapi-generator" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 shadowJar = { id = "com.github.johnrengelman.shadow", version = "8.1.1" }

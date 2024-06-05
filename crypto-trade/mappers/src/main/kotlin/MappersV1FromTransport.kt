@@ -20,7 +20,6 @@ fun OrderContext.fromTransport(request: IRequest) = when (request) {
 }
 
 private fun String?.toOrderId() = this?.let { OrderId(it) } ?: OrderId.NONE
-private fun String?.toOrderWithId() = Order(id = this.toOrderId())
 private fun String?.toOrderLock() = this?.let { OrderLock(it) } ?: OrderLock.NONE
 
 private fun OrderDebug?.transportToWorkMode(): OrderWorkMode = when (this?.mode) {
@@ -94,7 +93,9 @@ fun OrderContext.fromTransport(request: OrderSearchRequest) {
 }
 
 private fun OrderSearchFilter?.toInternal(): OrderFilter = OrderFilter(
-    searchString = this?.searchString ?: ""
+    searchString = this?.searchString ?: "",
+    userId = this?.userId?.let { OrderUserId(it) } ?: OrderUserId.NONE,
+    operationType = this?.operationType.fromTransport(),
 )
 
 private fun OrderCreateObject.toInternal(): Order = Order(

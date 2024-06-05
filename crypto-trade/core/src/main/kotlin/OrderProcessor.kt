@@ -5,11 +5,13 @@ import ru.otus.otuskotlin.crypto.trade.common.OrderContext
 import ru.otus.otuskotlin.crypto.trade.common.models.OrderCommand
 import ru.otus.otuskotlin.crypto.trade.common.models.OrderId
 import ru.otus.otuskotlin.crypto.trade.common.models.OrderLock
+import ru.otus.otuskotlin.crypto.trade.common.models.OrderState
+import ru.otus.otuskotlin.crypto.trade.cor.chain
 import ru.otus.otuskotlin.crypto.trade.cor.rootChain
 import ru.otus.otuskotlin.crypto.trade.cor.worker
 import ru.otus.otuskotlin.crypto.trade.core.general.initStatus
 import ru.otus.otuskotlin.crypto.trade.core.general.operation
-import ru.otus.otuskotlin.crypto.trade.core.general.stubs
+import ru.otus.otuskotlin.crypto.trade.core.repo.*
 import ru.otus.otuskotlin.crypto.trade.core.stubs.*
 import ru.otus.otuskotlin.crypto.trade.core.validation.*
 
@@ -20,6 +22,7 @@ class OrderProcessor(
 
     private val businessChain = rootChain<OrderContext> {
         initStatus("Инициализация статуса")
+        initRepo("Инициализация репозитория")
 
         operation("Создание заявки", OrderCommand.CREATE) {
             stubs("Обработка стабов") {
@@ -47,6 +50,12 @@ class OrderProcessor(
 
                 finishOrderValidation("Завершение проверок")
             }
+            chain {
+                title = "Логика сохранения"
+                repoPrepareCreate("Подготовка объекта для сохранения")
+                repoCreate("Создание заявки в БД")
+            }
+            prepareResult("Подготовка ответа")
         }
         operation("Получить заявку", OrderCommand.READ) {
             stubs("Обработка стабов") {
@@ -63,6 +72,17 @@ class OrderProcessor(
 
                 finishOrderValidation("Успешное завершение процедуры валидации")
             }
+            chain {
+                title = "Логика чтения"
+                repoRead("Чтение заявки из БД")
+                worker {
+                    title = "Подготовка ответа для Read"
+                    on { state == OrderState.RUNNING }
+                    handle { orderRepoDone = orderRepoRead }
+                }
+            }
+            prepareResult("Подготовка ответа")
+
         }
         operation("Изменить заявку", OrderCommand.UPDATE) {
             stubs("Обработка стабов") {
@@ -96,6 +116,14 @@ class OrderProcessor(
 
                 finishOrderValidation("Успешное завершение процедуры валидации")
             }
+            chain {
+                title = "Логика сохранения"
+                repoRead("Чтение заявки из БД")
+                checkLock("Проверяем консистентность по оптимистичной блокировке")
+                repoPrepareUpdate("Подготовка объекта для обновления")
+                repoUpdate("Обновление заявки в БД")
+            }
+            prepareResult("Подготовка ответа")
         }
         operation("Удалить заявку", OrderCommand.DELETE) {
             stubs("Обработка стабов") {
@@ -116,6 +144,14 @@ class OrderProcessor(
                 validateLockProperFormat("Проверка формата lock")
                 finishOrderValidation("Успешное завершение процедуры валидации")
             }
+            chain {
+                title = "Логика удаления"
+                repoRead("Чтение заявки из БД")
+                checkLock("Проверяем консистентность по оптимистичной блокировке")
+                repoPrepareDelete("Подготовка объекта для удаления")
+                repoDelete("Удаление заявки из БД")
+            }
+            prepareResult("Подготовка ответа")
         }
         operation("Поиск заявок", OrderCommand.SEARCH) {
             stubs("Обработка стабов") {
@@ -132,6 +168,8 @@ class OrderProcessor(
 
                 finishOrderFilterValidation("Успешное завершение процедуры валидации")
             }
+            repoSearch("Поиск заявки в БД по фильтру")
+            prepareResult("Подготовка ответа")
         }
     }.build()
 }

@@ -3,6 +3,7 @@ package ru.otus.otuskotlin.crypto.trade.common
 import CorSettings
 import kotlinx.datetime.Instant
 import ru.otus.otuskotlin.crypto.trade.common.models.*
+import ru.otus.otuskotlin.crypto.trade.common.repo.IRepoOrder
 import ru.otus.otuskotlin.crypto.trade.common.stubs.OrderStubs
 import ru.otus.otuskotlin.crypto.trade.common.ws.WsSession
 
@@ -26,6 +27,12 @@ data class OrderContext(
 
     var orderValidated: Order = Order(),
     var orderFilterValidated: OrderFilter = OrderFilter(),
+
+    var orderRepo: IRepoOrder = IRepoOrder.NONE,
+    var orderRepoRead: Order = Order(), // То, что прочитали из репозитория
+    var orderRepoPrepare: Order = Order(), // То, что готовим для сохранения в БД
+    var orderRepoDone: Order = Order(),  // Результат, полученный из БД
+    var ordersRepoDone: MutableList<Order> = mutableListOf(),
 
     var orderResponse: Order = Order(),
     var ordersResponse: MutableList<Order> = mutableListOf()
