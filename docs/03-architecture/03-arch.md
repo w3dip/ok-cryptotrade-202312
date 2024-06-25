@@ -4,4 +4,4 @@
 
 # Стек технологий
 
-Kotlin, Ktor, PostgreSQL, ArcadeDB, Cassandra, Kafka 
+Kotlin, Ktor, Websocket, Cassandra, Kafka
