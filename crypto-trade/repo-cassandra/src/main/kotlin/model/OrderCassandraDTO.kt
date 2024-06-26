@@ -66,8 +66,8 @@ data class OrderCassandraDTO(
         const val TABLE_NAME = "orders"
 
         const val COLUMN_ID = "id"
-        const val COLUMN_SEC_CODE = "secCode"
-        const val COLUMN_AGREEMENT_NUMBER = "agreementNumber"
+        const val COLUMN_SEC_CODE = "sec_code"
+        const val COLUMN_AGREEMENT_NUMBER = "agreement_number"
         const val COLUMN_QUANTITY = "quantity"
         const val COLUMN_PRICE = "price"
         const val COLUMN_USER_ID = "user_id"
