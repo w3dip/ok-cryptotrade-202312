@@ -18,15 +18,12 @@ version: '3'
 services:
 
   app:
-    image: nginx:latest
+    image: app-ktor:1.0.0
     #    ports:
     #      - "8080:80"
     depends_on:
       - fluent-bit
       - envoy
-    volumes:
-      - ./volumes/nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - ./volumes/nginx/nginx.conf:/etc/nginx/nginx.conf
     logging:
       # используемый драйвер логгирования
       driver: "fluentd"
