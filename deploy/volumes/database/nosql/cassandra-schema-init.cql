@@ -1,0 +1,2 @@
+CREATE KEYSPACE IF NOT EXISTS test_keyspace WITH REPLICATION = {'class': 'SimpleStrategy', 'replication_factor': 1};
+CREATE TABLE IF NOT EXISTS test_keyspace.orders (id text, secCode text, agreementNumber decimal, quantity decimal, price text, user_id text, operation_type text, lock text, PRIMARY KEY ((id), secCode));

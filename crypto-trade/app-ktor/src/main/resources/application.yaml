@@ -13,10 +13,10 @@ ktor:
 cryptotrade:
     repository:
         test: "inmemory"
-        prod: "$DB_TYPE_PROD:inmemory"
+        prod: "$DB_TYPE_PROD:cassandra"
 
         cassandra:
-            hosts: localhost
+            host: cassandra
             keyspace: test_keyspace
             pass: cassandra
             port: 9042
