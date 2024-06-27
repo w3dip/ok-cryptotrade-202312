@@ -9,8 +9,9 @@ dependencies {
     implementation(kotlin("stdlib"))
     implementation(libs.cor)
 
-    implementation(project(":common"))
-    implementation(project(":stubs"))
+    implementation(projects.common)
+    implementation(projects.stubs)
+    implementation(projects.auth)
 
     api(libs.coroutines.test)
     testImplementation(kotlin("test-junit"))

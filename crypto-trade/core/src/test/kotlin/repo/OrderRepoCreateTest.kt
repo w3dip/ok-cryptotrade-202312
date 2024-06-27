@@ -7,6 +7,8 @@ import ru.otus.otuskotlin.crypto.trade.common.models.*
 import ru.otus.otuskotlin.crypto.trade.common.repo.DbOrderResponseOk
 import ru.otus.otuskotlin.crypto.trade.core.OrderProcessor
 import ru.otus.otuskotlin.crypto.trade.repo.tests.OrderRepoMock
+import ru.otus.otuskotlin.crypto.trade.stubs.OrderStub.ORDER_BUY
+import ru.otus.otuskotlin.marketplace.biz.addTestPrincipal
 import java.math.BigDecimal
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -14,7 +16,7 @@ import kotlin.test.assertNotEquals
 
 class OrderRepoCreateTest {
 
-    private val userId = OrderUserId("321")
+    private val userId = ORDER_BUY.userId
     private val command = OrderCommand.CREATE
     private val uuid = "10000000-0000-0000-0000-000000000001"
     private val repo = OrderRepoMock(
@@ -51,6 +53,7 @@ class OrderRepoCreateTest {
                 operationType = OrderSide.BUY
             ),
         )
+        ctx.addTestPrincipal()
         processor.exec(ctx)
         assertEquals(OrderState.FINISHING, ctx.state)
         assertNotEquals(OrderId.NONE, ctx.orderResponse.id)

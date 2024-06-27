@@ -8,6 +8,7 @@ import ru.otus.otuskotlin.crypto.trade.common.repo.DbOrderResponseOk
 import ru.otus.otuskotlin.crypto.trade.common.repo.errorNotFound
 import ru.otus.otuskotlin.crypto.trade.core.OrderProcessor
 import ru.otus.otuskotlin.crypto.trade.repo.tests.OrderRepoMock
+import ru.otus.otuskotlin.marketplace.biz.addTestPrincipal
 import java.math.BigDecimal
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -48,6 +49,7 @@ fun repoNotFoundTest(command: OrderCommand) = runTest {
             lock = OrderLock("123-234-abc-ABC"),
         ),
     )
+    ctx.addTestPrincipal()
     processor.exec(ctx)
     assertEquals(OrderState.FAILING, ctx.state)
     assertEquals(Order(), ctx.orderResponse)

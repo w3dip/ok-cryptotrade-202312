@@ -6,6 +6,7 @@ import ru.otus.otuskotlin.crypto.trade.common.models.OrderState
 import ru.otus.otuskotlin.crypto.trade.common.models.OrderWorkMode
 import ru.otus.otuskotlin.crypto.trade.core.OrderProcessor
 import ru.otus.otuskotlin.crypto.trade.stubs.OrderStub
+import ru.otus.otuskotlin.marketplace.biz.addTestPrincipal
 import validation.runValidationTest
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
@@ -20,6 +21,7 @@ fun validationAgreementNumberCorrect(command: OrderCommand, processor: OrderProc
         workMode = OrderWorkMode.TEST,
         orderRequest = OrderStub.get(),
     )
+    ctx.addTestPrincipal()
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
     assertNotEquals(OrderState.FAILING, ctx.state)
@@ -35,6 +37,7 @@ fun validationAgreementNumberTrim(command: OrderCommand, processor: OrderProcess
             agreementNumber = " \n\tabc \n\t"
         },
     )
+    ctx.addTestPrincipal()
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
     assertNotEquals(OrderState.FAILING, ctx.state)
@@ -50,6 +53,7 @@ fun validationAgreementNumberEmpty(command: OrderCommand, processor: OrderProces
             agreementNumber = ""
         },
     )
+    ctx.addTestPrincipal()
     processor.exec(ctx)
     assertEquals(1, ctx.errors.size)
     assertEquals(OrderState.FAILING, ctx.state)
@@ -67,6 +71,7 @@ fun validationAgreementNumberSymbols(command: OrderCommand, processor: OrderProc
             agreementNumber = "!@#$%^&*(),.{}"
         },
     )
+    ctx.addTestPrincipal()
     processor.exec(ctx)
     assertEquals(1, ctx.errors.size)
     assertEquals(OrderState.FAILING, ctx.state)

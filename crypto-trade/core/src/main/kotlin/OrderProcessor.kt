@@ -11,6 +11,10 @@ import ru.otus.otuskotlin.crypto.trade.cor.rootChain
 import ru.otus.otuskotlin.crypto.trade.cor.worker
 import ru.otus.otuskotlin.crypto.trade.core.general.initStatus
 import ru.otus.otuskotlin.crypto.trade.core.general.operation
+import ru.otus.otuskotlin.crypto.trade.core.permissions.accessValidation
+import ru.otus.otuskotlin.crypto.trade.core.permissions.chainPermissions
+import ru.otus.otuskotlin.crypto.trade.core.permissions.frontPermissions
+import ru.otus.otuskotlin.crypto.trade.core.permissions.searchTypes
 import ru.otus.otuskotlin.crypto.trade.core.repo.*
 import ru.otus.otuskotlin.crypto.trade.core.stubs.*
 import ru.otus.otuskotlin.crypto.trade.core.validation.*
@@ -34,6 +38,7 @@ class OrderProcessor(
                 stubDbError("Имитация ошибки работы с БД")
                 stubNoCase("Ошибка: запрошенный стаб недопустим")
             }
+            chainPermissions("Вычисление разрешений для пользователя")
             validation {
                 worker("Копируем поля в orderValidating") { orderValidating = orderRequest.deepCopy() }
                 worker("Очистка id") { orderValidating.id = OrderId.NONE }
@@ -53,8 +58,10 @@ class OrderProcessor(
             chain {
                 title = "Логика сохранения"
                 repoPrepareCreate("Подготовка объекта для сохранения")
+                accessValidation("Вычисление прав доступа")
                 repoCreate("Создание заявки в БД")
             }
+            frontPermissions("Вычисление пользовательских разрешений для фронтенда")
             prepareResult("Подготовка ответа")
         }
         operation("Получить заявку", OrderCommand.READ) {
@@ -64,6 +71,7 @@ class OrderProcessor(
                 stubDbError("Имитация ошибки работы с БД")
                 stubNoCase("Ошибка: запрошенный стаб недопустим")
             }
+            chainPermissions("Вычисление разрешений для пользователя")
             validation {
                 worker("Копируем поля в orderValidating") { orderValidating = orderRequest.deepCopy() }
                 worker("Очистка id") { orderValidating.id = OrderId(orderValidating.id.asString().trim()) }
@@ -75,12 +83,14 @@ class OrderProcessor(
             chain {
                 title = "Логика чтения"
                 repoRead("Чтение заявки из БД")
+                accessValidation("Вычисление прав доступа")
                 worker {
                     title = "Подготовка ответа для Read"
                     on { state == OrderState.RUNNING }
                     handle { orderRepoDone = orderRepoRead }
                 }
             }
+            frontPermissions("Вычисление пользовательских разрешений для фронтенда")
             prepareResult("Подготовка ответа")
 
         }
@@ -95,6 +105,7 @@ class OrderProcessor(
                 stubDbError("Имитация ошибки работы с БД")
                 stubNoCase("Ошибка: запрошенный стаб недопустим")
             }
+            chainPermissions("Вычисление разрешений для пользователя")
             validation {
                 worker("Копируем поля в orderValidating") { orderValidating = orderRequest.deepCopy() }
                 worker("Очистка id") { orderValidating.id = OrderId(orderValidating.id.asString().trim()) }
@@ -119,10 +130,12 @@ class OrderProcessor(
             chain {
                 title = "Логика сохранения"
                 repoRead("Чтение заявки из БД")
+                accessValidation("Вычисление прав доступа")
                 checkLock("Проверяем консистентность по оптимистичной блокировке")
                 repoPrepareUpdate("Подготовка объекта для обновления")
                 repoUpdate("Обновление заявки в БД")
             }
+            frontPermissions("Вычисление пользовательских разрешений для фронтенда")
             prepareResult("Подготовка ответа")
         }
         operation("Удалить заявку", OrderCommand.DELETE) {
@@ -132,6 +145,7 @@ class OrderProcessor(
                 stubDbError("Имитация ошибки работы с БД")
                 stubNoCase("Ошибка: запрошенный стаб недопустим")
             }
+            chainPermissions("Вычисление разрешений для пользователя")
             validation {
                 worker("Копируем поля в orderValidating") {
                     orderValidating = orderRequest.deepCopy()
@@ -147,10 +161,12 @@ class OrderProcessor(
             chain {
                 title = "Логика удаления"
                 repoRead("Чтение заявки из БД")
+                accessValidation("Вычисление прав доступа")
                 checkLock("Проверяем консистентность по оптимистичной блокировке")
                 repoPrepareDelete("Подготовка объекта для удаления")
                 repoDelete("Удаление заявки из БД")
             }
+            frontPermissions("Вычисление пользовательских разрешений для фронтенда")
             prepareResult("Подготовка ответа")
         }
         operation("Поиск заявок", OrderCommand.SEARCH) {
@@ -160,6 +176,7 @@ class OrderProcessor(
                 stubDbError("Имитация ошибки работы с БД")
                 stubNoCase("Ошибка: запрошенный стаб недопустим")
             }
+            chainPermissions("Вычисление разрешений для пользователя")
             validation {
                 worker("Копируем поля в orderFilterValidating") {
                     orderFilterValidating = orderFilterRequest.deepCopy()
@@ -168,7 +185,9 @@ class OrderProcessor(
 
                 finishOrderFilterValidation("Успешное завершение процедуры валидации")
             }
+            searchTypes("Подготовка поискового запроса")
             repoSearch("Поиск заявки в БД по фильтру")
+            frontPermissions("Вычисление пользовательских разрешений для фронтенда")
             prepareResult("Подготовка ответа")
         }
     }.build()

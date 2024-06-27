@@ -5,7 +5,9 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import ru.otus.otuskotlin.crypto.trade.api.v1.models.*
 import ru.otus.otuskotlin.crypto.trade.app.AppSettings
+import ru.otus.otuskotlin.crypto.trade.app.common.AUTH_HEADER
 import ru.otus.otuskotlin.crypto.trade.app.common.controllerHelper
+import ru.otus.otuskotlin.crypto.trade.app.common.jwt2principal
 import ru.otus.otuskotlin.crypto.trade.mappers.fromTransport
 import ru.otus.otuskotlin.crypto.trade.mappers.toTransportOrder
 
@@ -28,7 +30,10 @@ suspend inline fun <reified Q : IRequest, @Suppress("unused") reified R : IRespo
     appSettings: AppSettings,
     logId: String,
 ) = appSettings.controllerHelper(
-    { fromTransport(this@processOrder.receive<Q>()) },
+    {
+        principal = this@processOrder.request.header(AUTH_HEADER).jwt2principal()
+        fromTransport(this@processOrder.receive<Q>())
+    },
     { this@processOrder.respond(toTransportOrder() as R) },
     logId,
 )

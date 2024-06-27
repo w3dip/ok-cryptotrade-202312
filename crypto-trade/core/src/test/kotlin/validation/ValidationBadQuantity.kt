@@ -6,6 +6,7 @@ import ru.otus.otuskotlin.crypto.trade.common.models.OrderState
 import ru.otus.otuskotlin.crypto.trade.common.models.OrderWorkMode
 import ru.otus.otuskotlin.crypto.trade.core.OrderProcessor
 import ru.otus.otuskotlin.crypto.trade.stubs.OrderStub
+import ru.otus.otuskotlin.marketplace.biz.addTestPrincipal
 import validation.runValidationTest
 import java.math.BigDecimal
 import kotlin.test.assertContains
@@ -21,6 +22,7 @@ fun validationQuantityCorrect(command: OrderCommand, processor: OrderProcessor) 
         workMode = OrderWorkMode.TEST,
         orderRequest = OrderStub.get(),
     )
+    ctx.addTestPrincipal()
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
     assertNotEquals(OrderState.FAILING, ctx.state)
@@ -36,6 +38,7 @@ fun validationQuantityNegative(command: OrderCommand, processor: OrderProcessor)
             quantity = BigDecimal.valueOf(-45000)
         },
     )
+    ctx.addTestPrincipal()
     processor.exec(ctx)
     assertEquals(1, ctx.errors.size)
     assertEquals(OrderState.FAILING, ctx.state)
@@ -53,6 +56,7 @@ fun validationQuantityZero(command: OrderCommand, processor: OrderProcessor) = r
             quantity = BigDecimal.ZERO
         },
     )
+    ctx.addTestPrincipal()
     processor.exec(ctx)
     assertEquals(1, ctx.errors.size)
     assertEquals(OrderState.FAILING, ctx.state)

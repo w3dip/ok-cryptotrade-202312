@@ -3,6 +3,8 @@ package ru.otus.otuskotlin.crypto.trade.common
 import CorSettings
 import kotlinx.datetime.Instant
 import ru.otus.otuskotlin.crypto.trade.common.models.*
+import ru.otus.otuskotlin.crypto.trade.common.permissions.PrincipalModel
+import ru.otus.otuskotlin.crypto.trade.common.permissions.UserPermissions
 import ru.otus.otuskotlin.crypto.trade.common.repo.IRepoOrder
 import ru.otus.otuskotlin.crypto.trade.common.stubs.OrderStubs
 import ru.otus.otuskotlin.crypto.trade.common.ws.WsSession
@@ -16,6 +18,10 @@ data class OrderContext(
     var workMode: OrderWorkMode = OrderWorkMode.PROD,
     var stubCase: OrderStubs = OrderStubs.NONE,
     var wsSession: WsSession = WsSession.NONE,
+
+    var principal: PrincipalModel = PrincipalModel.NONE,
+    val permissionsChain: MutableSet<UserPermissions> = mutableSetOf(),
+    var permitted: Boolean = false,
 
     var requestId: OrderRequestId = OrderRequestId.NONE,
     var timeStart: Instant = Instant.NONE,

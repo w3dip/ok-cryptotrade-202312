@@ -13,11 +13,13 @@ import ru.otus.otuskotlin.crypto.trade.app.module
 import ru.otus.otuskotlin.crypto.trade.common.models.OrderId
 import ru.otus.otuskotlin.crypto.trade.common.models.OrderLock
 import ru.otus.otuskotlin.crypto.trade.common.models.OrderSide
+import ru.otus.otuskotlin.crypto.trade.common.permissions.UserGroups
 import ru.otus.otuskotlin.crypto.trade.mappers.toTransportCreate
 import ru.otus.otuskotlin.crypto.trade.mappers.toTransportDelete
 import ru.otus.otuskotlin.crypto.trade.mappers.toTransportRead
 import ru.otus.otuskotlin.crypto.trade.mappers.toTransportUpdate
 import ru.otus.otuskotlin.crypto.trade.stubs.OrderStub
+import ru.otus.otuskotlin.marketplace.app.ktor.auth.addAuth
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
@@ -147,6 +149,7 @@ abstract class V1OrderRepoBaseTest {
         val response = client.post("/v1/order/$func") {
             contentType(ContentType.Application.Json)
             header("X-Trace-Id", "12345")
+            addAuth(groups = listOf(UserGroups.USER))
             setBody(request)
         }
         function(response)

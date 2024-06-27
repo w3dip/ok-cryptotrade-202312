@@ -1,6 +1,7 @@
 #!/bin/bash
 
 KCHOST=http://localhost:8081
+#KCHOST=http://localhost:32782
 REALM=ok-cryptotrade
 CLIENT_ID=ok-cryptotrade-service
 UNAME=otus-test
@@ -13,7 +14,7 @@ PASSWORD=otus
 #  -d "grant_type=password" \
 #  "$KCHOST/auth/realms/$REALM/protocol/openid-connect/token"  | jq -r '.access_token'`
 
-ACCESS_TOKEN=`curl \
+ACCESS_TOKEN=`curl -XPOST \
   -d "client_id=$CLIENT_ID" \
   -d "username=$UNAME" \
   -d "password=$PASSWORD" \

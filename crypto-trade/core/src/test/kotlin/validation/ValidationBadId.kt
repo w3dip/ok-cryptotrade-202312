@@ -7,6 +7,7 @@ import ru.otus.otuskotlin.crypto.trade.common.models.OrderState
 import ru.otus.otuskotlin.crypto.trade.common.models.OrderWorkMode
 import ru.otus.otuskotlin.crypto.trade.core.OrderProcessor
 import ru.otus.otuskotlin.crypto.trade.stubs.OrderStub
+import ru.otus.otuskotlin.marketplace.biz.addTestPrincipal
 import validation.runValidationTest
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
@@ -19,6 +20,7 @@ fun validationIdCorrect(command: OrderCommand, processor: OrderProcessor) = runV
         workMode = OrderWorkMode.TEST,
         orderRequest = OrderStub.get(),
     )
+    ctx.addTestPrincipal()
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
     assertNotEquals(OrderState.FAILING, ctx.state)
@@ -33,6 +35,7 @@ fun validationIdTrim(command: OrderCommand, processor: OrderProcessor) = runVali
             id = OrderId(" \n\t ${id.asString()} \n\t ")
         },
     )
+    ctx.addTestPrincipal()
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
     assertNotEquals(OrderState.FAILING, ctx.state)
@@ -47,6 +50,7 @@ fun validationIdEmpty(command: OrderCommand, processor: OrderProcessor) = runVal
             id = OrderId("")
         },
     )
+    ctx.addTestPrincipal()
     processor.exec(ctx)
     assertEquals(1, ctx.errors.size)
     assertEquals(OrderState.FAILING, ctx.state)
@@ -64,6 +68,7 @@ fun validationIdFormat(command: OrderCommand, processor: OrderProcessor) = runVa
             id = OrderId("!@#\$%^&*(),.{}")
         },
     )
+    ctx.addTestPrincipal()
     processor.exec(ctx)
     assertEquals(1, ctx.errors.size)
     assertEquals(OrderState.FAILING, ctx.state)

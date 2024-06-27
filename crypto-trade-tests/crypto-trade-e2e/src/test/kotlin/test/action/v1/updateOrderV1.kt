@@ -5,10 +5,7 @@ import io.kotest.assertions.withClue
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import ru.otus.otuskotlin.crypto.trade.api.v1.models.OrderResponseObject
-import ru.otus.otuskotlin.crypto.trade.api.v1.models.OrderUpdateObject
-import ru.otus.otuskotlin.crypto.trade.api.v1.models.OrderUpdateRequest
-import ru.otus.otuskotlin.crypto.trade.api.v1.models.OrderUpdateResponse
+import ru.otus.otuskotlin.crypto.trade.api.v1.models.*
 import ru.otus.otuskotlin.crypto.trade.e2e.fixture.client.Client
 import ru.otus.otuskotlin.crypto.trade.e2e.test.action.beValidId
 import ru.otus.otuskotlin.crypto.trade.e2e.test.action.beValidLock
@@ -32,7 +29,11 @@ suspend fun Client.updateOrder(order: OrderUpdateObject): OrderResponseObject =
         it.order!!
     }
 
-suspend fun <T> Client.updateOrder(order: OrderUpdateObject, block: (OrderUpdateResponse) -> T): T {
+suspend fun <T> Client.updateOrder(
+    order: OrderUpdateObject,
+    debug: OrderDebug = debugStubV1,
+    block: (OrderUpdateResponse) -> T
+): T {
     val id = order.id
     val lock = order.lock
     return withClue("updatedV1: $id, lock: $lock, set: $order") {
