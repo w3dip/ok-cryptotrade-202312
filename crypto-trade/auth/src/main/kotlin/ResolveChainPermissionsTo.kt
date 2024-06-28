@@ -20,17 +20,22 @@ fun resolveChainPermissions(
 private val groupPermissionsAdmits: Map<UserGroups, Set<UserPermissions>> = mapOf(
     UserGroups.USER to setOf(
         UserPermissions.READ_OWN,
-        UserPermissions.READ_PUBLIC,
         UserPermissions.CREATE_OWN,
         UserPermissions.UPDATE_OWN,
         UserPermissions.DELETE_OWN,
+        UserPermissions.SEARCH_OWN,
     ),
-    UserGroups.ADMIN_ORDER to setOf(),
+    UserGroups.ADMIN to setOf(
+        UserPermissions.READ_ALL,
+        UserPermissions.UPDATE_ALL,
+        UserPermissions.DELETE_ALL,
+        UserPermissions.SEARCH_ALL,
+    ),
     UserGroups.TEST to setOf(),
 )
 
 private val groupPermissionsDenys: Map<UserGroups, Set<UserPermissions>> = mapOf(
     UserGroups.USER to setOf(),
-    UserGroups.ADMIN_ORDER to setOf(),
+    UserGroups.ADMIN to setOf(),
     UserGroups.TEST to setOf(),
 )

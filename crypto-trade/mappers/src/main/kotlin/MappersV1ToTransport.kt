@@ -85,6 +85,7 @@ internal fun OrderPermissionClient.toTransportOrder() = when (this) {
     OrderPermissionClient.READ -> OrderPermissions.READ
     OrderPermissionClient.UPDATE -> OrderPermissions.UPDATE
     OrderPermissionClient.DELETE -> OrderPermissions.DELETE
+    OrderPermissionClient.SEARCH -> OrderPermissions.SEARCH
 }
 
 internal fun OrderSide.toTransportOrder(): ru.otus.otuskotlin.crypto.trade.api.v1.models.OrderSide? = when (this) {

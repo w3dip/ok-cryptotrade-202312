@@ -25,35 +25,39 @@ private val accessTable = mapOf(
     UserPermissions.READ_OWN to mapOf(
         PrincipalRelations.OWN to OrderPermissionClient.READ
     ),
-    UserPermissions.READ_GROUP to mapOf(
-        PrincipalRelations.GROUP to OrderPermissionClient.READ
-    ),
-    UserPermissions.READ_PUBLIC to mapOf(
-        PrincipalRelations.PUBLIC to OrderPermissionClient.READ
-    ),
-    UserPermissions.READ_CANDIDATE to mapOf(
-        PrincipalRelations.MODERATABLE to OrderPermissionClient.READ
-    ),
 
     // UPDATE
     UserPermissions.UPDATE_OWN to mapOf(
         PrincipalRelations.OWN to OrderPermissionClient.UPDATE
-    ),
-    UserPermissions.UPDATE_PUBLIC to mapOf(
-        PrincipalRelations.MODERATABLE to OrderPermissionClient.UPDATE
-    ),
-    UserPermissions.UPDATE_CANDIDATE to mapOf(
-        PrincipalRelations.MODERATABLE to OrderPermissionClient.UPDATE
     ),
 
     // DELETE
     UserPermissions.DELETE_OWN to mapOf(
         PrincipalRelations.OWN to OrderPermissionClient.DELETE
     ),
-    UserPermissions.DELETE_PUBLIC to mapOf(
-        PrincipalRelations.MODERATABLE to OrderPermissionClient.DELETE
+
+    // SEARCH
+    UserPermissions.SEARCH_OWN to mapOf(
+        PrincipalRelations.OWN to OrderPermissionClient.SEARCH
     ),
-    UserPermissions.DELETE_CANDIDATE to mapOf(
-        PrincipalRelations.MODERATABLE to OrderPermissionClient.DELETE
+
+    // READ
+    UserPermissions.READ_ALL to mapOf(
+        PrincipalRelations.ALL to OrderPermissionClient.READ
+    ),
+
+    // UPDATE
+    UserPermissions.UPDATE_ALL to mapOf(
+        PrincipalRelations.ALL to OrderPermissionClient.UPDATE
+    ),
+
+    // DELETE
+    UserPermissions.DELETE_ALL to mapOf(
+        PrincipalRelations.ALL to OrderPermissionClient.DELETE
+    ),
+
+    // SEARCH
+    UserPermissions.SEARCH_ALL to mapOf(
+        PrincipalRelations.ALL to OrderPermissionClient.SEARCH
     ),
 )

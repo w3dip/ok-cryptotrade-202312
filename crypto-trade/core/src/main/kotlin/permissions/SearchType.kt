@@ -15,8 +15,7 @@ fun CorChainDsl<OrderContext>.searchTypes(title: String) = chain {
     worker("Определение типа поиска") {
         orderFilterValidated.searchPermissions = setOfNotNull(
             SearchPermissions.OWN.takeIf { permissionsChain.contains(UserPermissions.SEARCH_OWN) },
-            SearchPermissions.PUBLIC.takeIf { permissionsChain.contains(UserPermissions.SEARCH_PUBLIC) },
-            SearchPermissions.REGISTERED.takeIf { permissionsChain.contains(UserPermissions.SEARCH_REGISTERED) },
+            SearchPermissions.ALL.takeIf { permissionsChain.contains(UserPermissions.SEARCH_ALL) },
         ).toMutableSet()
     }
 }

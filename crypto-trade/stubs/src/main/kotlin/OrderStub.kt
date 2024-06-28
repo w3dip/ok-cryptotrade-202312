@@ -18,6 +18,7 @@ object OrderStub {
                 OrderPermissionClient.READ,
                 OrderPermissionClient.UPDATE,
                 OrderPermissionClient.DELETE,
+                OrderPermissionClient.SEARCH,
             ),
             lock = OrderLock("123-234-abc-ABC"),
         )

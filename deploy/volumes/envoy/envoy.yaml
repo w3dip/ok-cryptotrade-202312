@@ -11,7 +11,7 @@ static_resources:
       address:
         socket_address:
           address: 0.0.0.0
-          port_value: 8090
+          port_value: 8080
       filter_chains:
         - filters:
             - name: envoy.filters.network.http_connection_manager
@@ -24,18 +24,21 @@ static_resources:
                     - name: local_service
                       domains: [ "*" ]
                       routes:
-                        - match:
-                            prefix: "/"
-                          route:
-                            cluster: app
-                            max_grpc_timeout: 0s
+                        - match: { path: "/" }
+                          route: { cluster: app }
+                        - match: { prefix: "/v1/order/" }
+                          route: { cluster: app }
+                        - match: { prefix: "/realms/" }
+                          route: { cluster: keycloak }
+                        - match: { prefix: "/resources/" }
+                          route: { cluster: keycloak }
                 http_filters:
                   - name: envoy.filters.http.jwt_authn
                     typed_config:
                       "@type": type.googleapis.com/envoy.extensions.filters.http.jwt_authn.v3.JwtAuthentication
                       providers:
                         keycloak_provider:
-                          issuer: "http://localhost:8081/realms/ok-cryptotrade"
+                          issuer: "http://localhost:8080/realms/ok-cryptotrade"
                           remote_jwks:
                             http_uri:
                               uri: http://keycloak:8080/realms/ok-cryptotrade/protocol/openid-connect/certs
@@ -47,7 +50,7 @@ static_resources:
                           forward: true
                           forward_payload_header: x-jwt-payload
                       rules:
-                        - match: { prefix: / }
+                        - match: { prefix: /v1/order/ }
                           requires: { provider_name: keycloak_provider }
                   - name: envoy.filters.http.router
                     typed_config:

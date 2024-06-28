@@ -716,7 +716,7 @@
           "protocolMapper": "oidc-hardcoded-claim-mapper",
           "consentRequired": false,
           "config": {
-            "claim.value": "ad-users",
+            "claim.value": "order-users",
             "userinfo.token.claim": "true",
             "id.token.claim": "true",
             "access.token.claim": "true",

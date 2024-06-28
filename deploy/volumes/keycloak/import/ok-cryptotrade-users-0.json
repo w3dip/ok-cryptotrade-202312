@@ -27,6 +27,60 @@
       "groups": [
         "/USER"
       ]
+    },
+    {
+      "id": "1dff9a25-e8ad-4aae-9466-b6503d211bb2",
+      "createdTimestamp": 1706964619142,
+      "username": "otus-test2",
+      "enabled": true,
+      "totp": false,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "id": "9a869a94-b3f8-4edb-873d-767381d091e0",
+          "type": "password",
+          "userLabel": "My password",
+          "createdDate": 1706964634548,
+          "secretData": "{\"value\":\"CBy36ufg5bdAyXTLX9gMYyxw4QXKiAkNox6NFYi8FuQ=\",\"salt\":\"wasUxUctTzzm0c5HTyy7Sw==\",\"additionalParameters\":{}}",
+          "credentialData": "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
+        }
+      ],
+      "disableableCredentialTypes": [],
+      "requiredActions": [],
+      "realmRoles": [
+        "default-roles-ok-cryptotrade"
+      ],
+      "notBefore": 0,
+      "groups": [
+        "/USER"
+      ]
+    },
+    {
+      "id": "2a61390b-44bc-4018-9b0e-abfe43d5801d",
+      "createdTimestamp": 1706964619142,
+      "username": "otus-admin",
+      "enabled": true,
+      "totp": false,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "id": "5964f1ec-7ad9-4921-8ec0-d76d99e87d03",
+          "type": "password",
+          "userLabel": "My password",
+          "createdDate": 1706964634548,
+          "secretData": "{\"value\":\"CBy36ufg5bdAyXTLX9gMYyxw4QXKiAkNox6NFYi8FuQ=\",\"salt\":\"wasUxUctTzzm0c5HTyy7Sw==\",\"additionalParameters\":{}}",
+          "credentialData": "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
+        }
+      ],
+      "disableableCredentialTypes": [],
+      "requiredActions": [],
+      "realmRoles": [
+        "default-roles-ok-cryptotrade"
+      ],
+      "notBefore": 0,
+      "groups": [
+        "/ADMIN"
+      ]
     }
   ]
 }

@@ -415,6 +415,17 @@
       ],
       "clientRoles": {},
       "subGroups": []
+    },
+    {
+      "id": "05675f68-f8ee-4abe-b72e-6fe8ace17af8",
+      "name": "ADMIN",
+      "path": "/ADMIN",
+      "subGroups": [],
+      "attributes": {},
+      "realmRoles": [
+        "default-roles-ok-cryptotrade"
+      ],
+      "clientRoles": {}
     }
   ],
   "defaultRole": {
@@ -716,7 +727,7 @@
           "protocolMapper": "oidc-hardcoded-claim-mapper",
           "consentRequired": false,
           "config": {
-            "claim.value": "ad-users",
+            "claim.value": "order-users",
             "userinfo.token.claim": "true",
             "id.token.claim": "true",
             "access.token.claim": "true",

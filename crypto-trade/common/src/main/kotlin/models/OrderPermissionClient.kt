@@ -4,4 +4,5 @@ enum class OrderPermissionClient {
     READ,
     UPDATE,
     DELETE,
+    SEARCH,
 }

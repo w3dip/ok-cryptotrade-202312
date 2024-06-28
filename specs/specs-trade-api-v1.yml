@@ -328,6 +328,7 @@ components:
         - read
         - update
         - delete
+        - search
 
     OrderResponseSingle:
       allOf:

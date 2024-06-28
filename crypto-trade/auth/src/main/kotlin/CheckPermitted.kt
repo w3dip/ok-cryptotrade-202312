@@ -44,11 +44,6 @@ private val accessTable = mapOf(
         permission = UserPermissions.READ_OWN,
         relation = PrincipalRelations.OWN,
     ) to true,
-    AccessTableConditions(
-        command = OrderCommand.READ,
-        permission = UserPermissions.READ_PUBLIC,
-        relation = PrincipalRelations.PUBLIC,
-    ) to true,
 
     // Update
     AccessTableConditions(
@@ -62,5 +57,40 @@ private val accessTable = mapOf(
         command = OrderCommand.DELETE,
         permission = UserPermissions.DELETE_OWN,
         relation = PrincipalRelations.OWN,
+    ) to true,
+
+    // Search
+    AccessTableConditions(
+        command = OrderCommand.SEARCH,
+        permission = UserPermissions.SEARCH_OWN,
+        relation = PrincipalRelations.OWN,
+    ) to true,
+
+    // Read
+    AccessTableConditions(
+        command = OrderCommand.READ,
+        permission = UserPermissions.READ_ALL,
+        relation = PrincipalRelations.ALL,
+    ) to true,
+
+    // Update
+    AccessTableConditions(
+        command = OrderCommand.UPDATE,
+        permission = UserPermissions.UPDATE_ALL,
+        relation = PrincipalRelations.ALL,
+    ) to true,
+
+    // Delete
+    AccessTableConditions(
+        command = OrderCommand.DELETE,
+        permission = UserPermissions.DELETE_ALL,
+        relation = PrincipalRelations.ALL,
+    ) to true,
+
+    // Search
+    AccessTableConditions(
+        command = OrderCommand.SEARCH,
+        permission = UserPermissions.SEARCH_ALL,
+        relation = PrincipalRelations.ALL,
     ) to true,
 )

@@ -65,7 +65,7 @@ private fun PrincipalModel.fromPrincipal(): JwtPayload = JwtPayload(
 
 private fun String?.toPrincipalGroup(): UserGroups? = when (this?.uppercase()) {
     "USER" -> UserGroups.USER
-    "ADMIN_ORDER" -> UserGroups.ADMIN_ORDER
+    "ADMIN" -> UserGroups.ADMIN
     "TEST" -> UserGroups.TEST
     // TODO сделать обработку ошибок
     else -> null
@@ -73,7 +73,7 @@ private fun String?.toPrincipalGroup(): UserGroups? = when (this?.uppercase()) {
 
 private fun UserGroups?.fromPrincipalGroup(): String? = when (this) {
     UserGroups.USER -> "USER"
-    UserGroups.ADMIN_ORDER -> "ADMIN_ORDER"
+    UserGroups.ADMIN -> "ADMIN"
     UserGroups.TEST -> "TEST"
     // TODO сделать обработку ошибок
     else -> null

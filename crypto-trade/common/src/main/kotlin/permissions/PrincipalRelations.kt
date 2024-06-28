@@ -4,7 +4,5 @@ enum class PrincipalRelations {
     NONE,
     NEW,
     OWN,
-    GROUP,
-    PUBLIC,
-    MODERATABLE,
+    ALL
 }
