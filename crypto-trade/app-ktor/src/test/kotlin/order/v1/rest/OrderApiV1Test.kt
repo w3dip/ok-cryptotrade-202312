@@ -27,8 +27,8 @@ class OrderApiV1Test {
             order = OrderCreateObject(
                 secCode = "BTC",
                 agreementNumber = "A001",
-                quantity = BigDecimal.valueOf(5),
-                price = BigDecimal.valueOf(65000),
+                quantity = BigDecimal.valueOf(2000.00),
+                price = BigDecimal.valueOf(200000.00),
                 operationType = OrderSide.BUY
             ),
             debug = OrderDebug(
@@ -66,8 +66,8 @@ class OrderApiV1Test {
                 id = "102",
                 secCode = "BTC",
                 agreementNumber = "A001",
-                quantity = BigDecimal.valueOf(5),
-                price = BigDecimal.valueOf(65000),
+                quantity = BigDecimal.valueOf(2000.00),
+                price = BigDecimal.valueOf(200000.00),
                 operationType = OrderSide.BUY
             ),
             debug = OrderDebug(

@@ -10,8 +10,8 @@ object OrderStub {
             id = OrderId("001"),
             secCode = "BTC",
             agreementNumber = "A001",
-            quantity = BigDecimal.valueOf(1000.00),
-            price = BigDecimal.valueOf(100_000.00),
+            quantity = BigDecimal.valueOf(2000.00),
+            price = BigDecimal.valueOf(200000.00),
             userId = OrderUserId("user-1"),
             operationType = OrderSide.BUY,
             permissionsClient = mutableSetOf(

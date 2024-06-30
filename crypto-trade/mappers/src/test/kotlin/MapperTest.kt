@@ -22,8 +22,8 @@ class MapperTest {
             order = OrderCreateObject(
                 secCode = "BTC",
                 agreementNumber = "A001",
-                quantity = BigDecimal.valueOf(5),
-                price = BigDecimal.valueOf(65000),
+                quantity = BigDecimal.valueOf(2000.00),
+                price = BigDecimal.valueOf(200000.00),
                 operationType = OrderSide.BUY,
             ),
         )
@@ -35,8 +35,8 @@ class MapperTest {
         assertEquals(OrderWorkMode.STUB, context.workMode)
         assertEquals("BTC", context.orderRequest.secCode)
         assertEquals("A001", context.orderRequest.agreementNumber)
-        assertEquals(BigDecimal.valueOf(5), context.orderRequest.quantity)
-        assertEquals(BigDecimal.valueOf(65000), context.orderRequest.price)
+        assertEquals(BigDecimal.valueOf(2000.00), context.orderRequest.quantity)
+        assertEquals(BigDecimal.valueOf(200000.00), context.orderRequest.price)
         assertEquals(BUY, context.orderRequest.operationType)
     }
 
@@ -48,8 +48,8 @@ class MapperTest {
             orderResponse = Order(
                 secCode = "BTC",
                 agreementNumber = "A001",
-                quantity = BigDecimal.valueOf(5),
-                price = BigDecimal.valueOf(65000),
+                quantity = BigDecimal.valueOf(2000.00),
+                price = BigDecimal.valueOf(200000.00),
                 operationType = BUY,
             ),
             errors = mutableListOf(
@@ -67,8 +67,8 @@ class MapperTest {
 
         assertEquals("BTC", req.order?.secCode)
         assertEquals("A001", req.order?.agreementNumber)
-        assertEquals(BigDecimal.valueOf(5), req.order?.quantity)
-        assertEquals(BigDecimal.valueOf(65000), req.order?.price)
+        assertEquals(BigDecimal.valueOf(2000.00), req.order?.quantity)
+        assertEquals(BigDecimal.valueOf(200000.00), req.order?.price)
         assertEquals(OrderSide.BUY, req.order?.operationType)
         assertEquals(1, req.errors?.size)
         assertEquals("err", req.errors?.firstOrNull()?.code)
