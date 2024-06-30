@@ -73,13 +73,6 @@ private val accessTable = mapOf(
         relation = PrincipalRelations.ALL,
     ) to true,
 
-    // Update
-    AccessTableConditions(
-        command = OrderCommand.UPDATE,
-        permission = UserPermissions.UPDATE_ALL,
-        relation = PrincipalRelations.ALL,
-    ) to true,
-
     // Delete
     AccessTableConditions(
         command = OrderCommand.DELETE,

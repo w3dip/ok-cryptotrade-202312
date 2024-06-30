@@ -27,7 +27,6 @@ private fun OrderContext.toOrderLog(): OrderLogModel? {
 
 private fun OrderFilter.toLog() = OrderFilterLog(
     searchString = searchString.takeIf { it.isNotBlank() },
-    userId = userId.takeIf { it != OrderUserId.NONE }?.asString(),
     operationType = operationType.takeIf { it != OrderSide.NONE }?.name,
 )
 

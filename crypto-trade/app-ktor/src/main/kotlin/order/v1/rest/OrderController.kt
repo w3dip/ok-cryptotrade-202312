@@ -32,6 +32,8 @@ suspend inline fun <reified Q : IRequest, @Suppress("unused") reified R : IRespo
 ) = appSettings.controllerHelper(
     {
         principal = this@processOrder.request.header(AUTH_HEADER).jwt2principal()
+        //principal = PrincipalModel(OrderUserId("f4168d6e-4f32-42d6-bb1c-7373d4f19bf0"), "Николай", "Владимирович", "Попов", setOf(
+        //    UserGroups.USER))
         fromTransport(this@processOrder.receive<Q>())
     },
     { this@processOrder.respond(toTransportOrder() as R) },

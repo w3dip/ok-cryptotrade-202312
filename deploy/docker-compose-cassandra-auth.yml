@@ -13,18 +13,26 @@
 # 1) Запускаем keycloak-tokens.sh
 # 2) call-envoy.sh
 # 3) opensearch http://localhost:5601/ admin-admin
+# 4) cqlsh localhost 9042 -u cassandra -p cassandra
 
 version: '3'
 services:
 
+  # Для включения SASI надо собрать кастомный образ
+  # docker build -t w3dip/cassandra_with_sasi .
+
   cassandra:
-    image: 'bitnami/cassandra:4.0.12'
+    image: 'w3dip/cassandra_with_sasi'
     ports:
       - "7000:7000"
       - "9042:9042"
+    environment:
+      - CASSANDRA_ENABLE_USER_DEFINED_FUNCTIONS=true
+      - CASSANDRA_SASI_ENABLED=true
     volumes:
       - ~/cassandra-data:/bitnami
       - ./volumes/database/nosql:/docker-entrypoint-initdb.d
+    #      - ./volumes/database/cassandra.yaml:/opt/bitnami/cassandra/conf/cassandra.yaml
     networks:
       - app-tier
 

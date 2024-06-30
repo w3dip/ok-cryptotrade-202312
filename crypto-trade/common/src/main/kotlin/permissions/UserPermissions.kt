@@ -9,7 +9,6 @@ enum class UserPermissions {
     SEARCH_OWN,
 
     READ_ALL,
-    UPDATE_ALL,
     DELETE_ALL,
     SEARCH_ALL
 }

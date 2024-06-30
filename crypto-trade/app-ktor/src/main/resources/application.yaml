@@ -17,6 +17,7 @@ cryptotrade:
 
         cassandra:
             host: cassandra
+            #            host: localhost
             keyspace: test_keyspace
             pass: cassandra
             port: 9042

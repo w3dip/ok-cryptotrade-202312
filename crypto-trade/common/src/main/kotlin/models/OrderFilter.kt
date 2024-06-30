@@ -4,7 +4,6 @@ import ru.otus.otuskotlin.crypto.trade.common.permissions.SearchPermissions
 
 data class OrderFilter(
     var searchString: String = "",
-    var userId: OrderUserId = OrderUserId.NONE,
     var operationType: OrderSide = OrderSide.NONE,
     var searchPermissions: MutableSet<SearchPermissions> = mutableSetOf(),
 ) {

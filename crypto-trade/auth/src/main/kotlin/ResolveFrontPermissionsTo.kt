@@ -46,11 +46,6 @@ private val accessTable = mapOf(
         PrincipalRelations.ALL to OrderPermissionClient.READ
     ),
 
-    // UPDATE
-    UserPermissions.UPDATE_ALL to mapOf(
-        PrincipalRelations.ALL to OrderPermissionClient.UPDATE
-    ),
-
     // DELETE
     UserPermissions.DELETE_ALL to mapOf(
         PrincipalRelations.ALL to OrderPermissionClient.DELETE

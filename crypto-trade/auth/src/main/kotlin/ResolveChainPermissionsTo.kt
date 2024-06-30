@@ -27,7 +27,6 @@ private val groupPermissionsAdmits: Map<UserGroups, Set<UserPermissions>> = mapO
     ),
     UserGroups.ADMIN to setOf(
         UserPermissions.READ_ALL,
-        UserPermissions.UPDATE_ALL,
         UserPermissions.DELETE_ALL,
         UserPermissions.SEARCH_ALL,
     ),
