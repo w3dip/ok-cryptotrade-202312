@@ -26,6 +26,11 @@ static_resources:
                       routes:
                         - match: { path: "/" }
                           route: { cluster: app }
+                        - match: { prefix: "/v1/order/ws" }
+                          route:
+                            cluster: app
+                            upgrade_configs:
+                              - upgrade_type: websocket
                         - match: { prefix: "/v1/order/" }
                           route: { cluster: app }
                         - match: { prefix: "/realms/" }

@@ -2,6 +2,8 @@ package ru.otus.otuskotlin.crypto.trade.app.order.v1.ws
 
 import apiV1Mapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import io.ktor.server.request.*
+import io.ktor.server.websocket.*
 import io.ktor.websocket.*
 import kotlinx.coroutines.channels.ClosedReceiveChannelException
 import kotlinx.coroutines.flow.collect
@@ -9,7 +11,9 @@ import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.receiveAsFlow
 import ru.otus.otuskotlin.crypto.trade.api.v1.models.IRequest
 import ru.otus.otuskotlin.crypto.trade.app.AppSettings
+import ru.otus.otuskotlin.crypto.trade.app.common.AUTH_HEADER
 import ru.otus.otuskotlin.crypto.trade.app.common.controllerHelper
+import ru.otus.otuskotlin.crypto.trade.app.common.jwt2principal
 import ru.otus.otuskotlin.crypto.trade.common.models.OrderCommand
 import ru.otus.otuskotlin.crypto.trade.mappers.fromTransport
 import ru.otus.otuskotlin.crypto.trade.mappers.toTransportInit
@@ -36,6 +40,8 @@ suspend fun WebSocketSession.orderHandler(appSettings: AppSettings) = with(Order
         try {
             appSettings.controllerHelper(
                 {
+                    principal =
+                        (this@with.session as WebSocketServerSession).call.request.header(AUTH_HEADER).jwt2principal()
                     fromTransport(apiV1Mapper.readValue<IRequest>(frame.readText()))
                     wsSession = this@with
                 },
