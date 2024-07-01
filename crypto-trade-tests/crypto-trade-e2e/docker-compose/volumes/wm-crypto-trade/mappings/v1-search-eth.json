@@ -14,14 +14,6 @@
       "responseType": "search",
       "result": "success",
       "orders": [
-        {
-          "id": "124",
-          "secCode": "ETH",
-          "agreementNumber": "A001",
-          "quantity": "3",
-          "price": "3000",
-          "operationType": "buy"
-        }
       ]
     },
     "headers": {
