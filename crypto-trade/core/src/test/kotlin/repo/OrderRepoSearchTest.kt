@@ -7,13 +7,15 @@ import ru.otus.otuskotlin.crypto.trade.common.models.*
 import ru.otus.otuskotlin.crypto.trade.common.repo.DbOrdersResponseOk
 import ru.otus.otuskotlin.crypto.trade.core.OrderProcessor
 import ru.otus.otuskotlin.crypto.trade.repo.tests.OrderRepoMock
+import ru.otus.otuskotlin.crypto.trade.stubs.OrderStub
+import ru.otus.otuskotlin.marketplace.biz.addTestPrincipal
 import java.math.BigDecimal
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class OrderRepoSearchTest {
 
-    private val userId = OrderUserId("321")
+    private val userId = OrderStub.ORDER_BUY.userId
     private val command = OrderCommand.SEARCH
     private val initOrder = Order(
         id = OrderId("123"),
@@ -45,6 +47,7 @@ class OrderRepoSearchTest {
                 operationType = OrderSide.BUY
             ),
         )
+        ctx.addTestPrincipal()
         processor.exec(ctx)
         assertEquals(OrderState.FINISHING, ctx.state)
         assertEquals(1, ctx.ordersResponse.size)

@@ -38,3 +38,6 @@ include(":repo-inmemory")
 include(":repo-stubs")
 include(":repo-tests")
 include(":repo-cassandra")
+
+// Auth
+include(":auth")

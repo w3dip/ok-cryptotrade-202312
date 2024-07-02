@@ -12,8 +12,8 @@
         "id": "123",
         "secCode": "BTC",
         "agreementNumber": "A001",
-        "quantity": "5",
-        "price": "65000",
+        "quantity": "2000.0",
+        "price": "200000.0",
         "operationType": "buy"
       }
     },

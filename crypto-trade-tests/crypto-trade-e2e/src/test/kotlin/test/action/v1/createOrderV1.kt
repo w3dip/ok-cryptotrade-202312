@@ -5,13 +5,13 @@ import io.kotest.assertions.withClue
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import ru.otus.otuskotlin.crypto.trade.api.v1.models.OrderCreateObject
-import ru.otus.otuskotlin.crypto.trade.api.v1.models.OrderCreateRequest
-import ru.otus.otuskotlin.crypto.trade.api.v1.models.OrderCreateResponse
-import ru.otus.otuskotlin.crypto.trade.api.v1.models.OrderResponseObject
+import ru.otus.otuskotlin.crypto.trade.api.v1.models.*
 import ru.otus.otuskotlin.crypto.trade.e2e.fixture.client.Client
 
-suspend fun Client.createOrder(order: OrderCreateObject = someCreateOrder): OrderResponseObject = createOrder(order) {
+suspend fun Client.createOrder(
+    order: OrderCreateObject = someCreateOrder,
+    debug: OrderDebug = debugStubV1
+): OrderResponseObject = createOrder(order) {
     it should haveSuccessResult
     it.order shouldNotBe null
     it.order?.apply {
@@ -24,7 +24,11 @@ suspend fun Client.createOrder(order: OrderCreateObject = someCreateOrder): Orde
     it.order!!
 }
 
-suspend fun <T> Client.createOrder(order: OrderCreateObject = someCreateOrder, block: (OrderCreateResponse) -> T): T =
+suspend fun <T> Client.createOrder(
+    order: OrderCreateObject = someCreateOrder,
+    debug: OrderDebug = debugStubV1,
+    block: (OrderCreateResponse) -> T
+): T =
     withClue("createOrderV1: $order") {
         val response = sendAndReceive(
             "order/create", OrderCreateRequest(

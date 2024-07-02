@@ -1,5 +1,6 @@
 plugins {
     id("build-jvm")
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 group = rootProject.group
@@ -10,6 +11,8 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":log-v1"))
     implementation(project(":core"))
+    implementation(libs.kotlinx.serialization.core)
+    implementation(libs.kotlinx.serialization.json)
 
     testImplementation(libs.coroutines.test)
     testImplementation(project(":api-v1"))

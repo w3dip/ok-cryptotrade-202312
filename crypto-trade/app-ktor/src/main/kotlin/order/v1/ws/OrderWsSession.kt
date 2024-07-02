@@ -6,7 +6,7 @@ import ru.otus.otuskotlin.crypto.trade.api.v1.models.IResponse
 import ru.otus.otuskotlin.crypto.trade.common.ws.WsSession
 
 data class OrderWsSession(
-    private val session: WebSocketSession
+    val session: WebSocketSession
 ) : WsSession {
     override suspend fun <T> send(obj: T) {
         require(obj is IResponse)

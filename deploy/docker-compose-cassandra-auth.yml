@@ -1,0 +1,166 @@
+# Минимальная версия инфраструктуры на базе
+# OpenSearch - хранилище логов и метрик
+# OpenSearch Dashboards - отрисовка логов
+# Fluent Bit - служба сбора логов
+# Envoy - прокси
+# Keycloak - сервер идентификации
+
+# Адреса:
+# Приложение доступно по http://localhost:8090 (envoy прокси)
+# Панели мониторинга http://localhost:5601 (opensearch dashboards, kibana)
+# Управление пользователями http://localhost:8081 (keycloak)
+
+# 1) Запускаем keycloak-tokens.sh
+# 2) call-envoy.sh
+# 3) opensearch http://localhost:5601/ admin-admin
+# 4) cqlsh localhost 9042 -u cassandra -p cassandra
+
+version: '3'
+services:
+
+  # Для включения SASI надо собрать кастомный образ
+  # docker build -t w3dip/cassandra_with_sasi .
+
+  cassandra:
+    image: 'w3dip/cassandra_with_sasi'
+    ports:
+      - "7000:7000"
+      - "9042:9042"
+    environment:
+      - CASSANDRA_ENABLE_USER_DEFINED_FUNCTIONS=true
+      - CASSANDRA_SASI_ENABLED=true
+    volumes:
+      - ~/cassandra-data:/bitnami
+      - ./volumes/database/nosql:/docker-entrypoint-initdb.d
+    #      - ./volumes/database/cassandra.yaml:/opt/bitnami/cassandra/conf/cassandra.yaml
+    networks:
+      - app-tier
+
+  app:
+    image: app-ktor:1.0.0
+    #    ports:
+    #      - "8080:80"
+    depends_on:
+      - fluent-bit
+      - envoy
+      - cassandra
+    logging:
+      # используемый драйвер логгирования
+      driver: "fluentd"
+      options:
+        # куда посылать лог-сообщения, необходимо чтобы адрес
+        # совпадал с настройками плагина forward
+        fluentd-address: localhost:24224
+        # теги используются для маршрутизации лог-сообщений, тема
+        # маршрутизации будет рассмотрена ниже
+        tag: app.logs
+    networks:
+      - app-tier
+
+  fluent-bit:
+    container_name: fluent-bit
+    image: fluent/fluent-bit
+    ports:
+      # необходимо открыть порты, которые используются плагином forward
+      - "24224:24224"
+      - "24224:24224/udp"
+      - "2020:2020"
+    environment:
+      - opensearch_host=opensearch
+      - opensearch_user=admin
+      - opensearch_pass=admin
+    volumes:
+      - ./volumes/fluent-bit-etc/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
+      - ./volumes/fluent-bit-etc/parsers.conf:/fluent-bit/etc/parsers.conf
+    networks:
+      - app-tier
+
+  opensearch:
+    container_name: opensearch
+    image: opensearchproject/opensearch:2.8.0
+    environment:
+      - discovery.type=single-node
+      - http.port=9200
+      - bootstrap.memory_lock=true
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - '9200:9200'
+      - '9600:9600'
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    volumes:
+      - opensearch-data:/usr/share/opensearch/data
+    networks:
+      - app-tier
+
+  dashboards:
+    image: opensearchproject/opensearch-dashboards:2.8.0
+    container_name: opensearch-dashboards
+    ports:
+      - 5601:5601
+    expose:
+      - "5601"
+    environment:
+      OPENSEARCH_HOSTS: '["https://opensearch:9200"]'
+    depends_on:
+      - opensearch
+    networks:
+      - app-tier
+
+  envoy:
+    image: envoyproxy/envoy:v1.29.0  # Use the official Envoy proxy image
+    volumes:
+      - ./volumes/envoy/envoy.yaml:/etc/envoy/envoy.yaml  # Mount your Envoy configuration file
+    #      - ./envoy/certs:/etc/envoy/certs  # Mount your TLS certificates
+    ports:
+      - "8080:8080"
+    depends_on:
+      keycloak:
+        condition: service_healthy
+    networks:
+      - app-tier
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.4
+    #    ports:
+    #      - "8081:8080"
+    volumes:
+      #      - ./keycloak:/tmp
+      - ./volumes/keycloak/import:/opt/keycloak/data/import
+    #      - ./keycloak/standalone.xml:/opt/jboss/keycloak/standalone/configuration/standalone.xml
+    #      - ./keycloak/certs/keycloak.jks:/etc/x509/https/keystore  # Mount your Keycloak keystore
+    environment:
+      KEYCLOAK_USER: otus
+      KEYCLOAK_PASSWORD: otus
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KEYCLOAK_IMPORT: "/tmp/realm-export.json"
+      KC_HEALTH_ENABLED: "true"
+      KC_HOSTNAME_URL: "http://localhost:8080/"
+    healthcheck:
+      test: [ "CMD-SHELL", "exec 3<>/dev/tcp/127.0.0.1/8080;echo -e \"GET /health/ready HTTP/1.1\r\nhost: http://localhost\r\nConnection: close\r\n\r\n\" >&3;grep \"HTTP/1.1 200 OK\" <&3" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    command:
+      - start-dev
+      #      - --features admin-fine-grained-authz
+      - --hostname-port=8081
+      - --import-realm
+      #      - --proxy edge
+      - --proxy-headers=forwarded
+      - --hostname-strict=false
+    networks:
+      - app-tier
+
+volumes:
+  opensearch-data:
+
+networks:
+  app-tier:
+    driver: bridge

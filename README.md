@@ -4,7 +4,7 @@
 [Kotlin Backend Developer](https://otus.ru/lessons/kotlin/).
 Поток курса 2023-12.
 
-**Название проекта:** CryptoXchange
+**Название проекта:** Криптовалютная биржа CryptoXchange
 
 **Краткое описание проекта:**
 

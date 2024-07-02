@@ -3,6 +3,7 @@ package ru.otus.otuskotlin.crypto.trade.core.repo
 import ru.otus.otuskotlin.crypto.trade.common.OrderContext
 import ru.otus.otuskotlin.crypto.trade.common.helpers.fail
 import ru.otus.otuskotlin.crypto.trade.common.models.OrderState
+import ru.otus.otuskotlin.crypto.trade.common.permissions.SearchPermissions
 import ru.otus.otuskotlin.crypto.trade.common.repo.DbOrderFilterRequest
 import ru.otus.otuskotlin.crypto.trade.common.repo.DbOrdersResponseErr
 import ru.otus.otuskotlin.crypto.trade.common.repo.DbOrdersResponseOk
@@ -16,9 +17,11 @@ fun CorChainDsl<OrderContext>.repoSearch(title: String) = worker {
     handle {
         val request = DbOrderFilterRequest(
             secCodeFilter = orderFilterValidated.searchString,
-            userId = orderFilterValidated.userId,
             operationType = orderFilterValidated.operationType,
         )
+        if (orderFilterValidated.searchPermissions.contains(SearchPermissions.OWN)) {
+            request.userId = principal.id
+        }
         when (val result = orderRepo.searchOrder(request)) {
             is DbOrdersResponseOk -> ordersRepoDone = result.data.toMutableList()
             is DbOrdersResponseErr -> fail(result.errors)

@@ -14,14 +14,6 @@
       "responseType": "search",
       "result": "success",
       "orders": [
-        {
-          "id": "123",
-          "secCode": "BTC",
-          "agreementNumber": "A001",
-          "quantity": "5",
-          "price": "65000",
-          "operationType": "buy"
-        }
       ]
     },
     "headers": {

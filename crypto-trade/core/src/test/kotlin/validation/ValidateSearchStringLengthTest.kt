@@ -4,6 +4,7 @@ import ru.otus.otuskotlin.crypto.trade.common.OrderContext
 import ru.otus.otuskotlin.crypto.trade.common.models.OrderFilter
 import ru.otus.otuskotlin.crypto.trade.common.models.OrderState
 import ru.otus.otuskotlin.crypto.trade.cor.rootChain
+import ru.otus.otuskotlin.marketplace.biz.addTestPrincipal
 import validation.runValidationTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -21,6 +22,7 @@ class ValidateSearchStringLengthTest {
     @Test
     fun blankString() = runValidationTest {
         val ctx = OrderContext(state = OrderState.RUNNING, orderFilterValidating = OrderFilter(searchString = "  "))
+        ctx.addTestPrincipal()
         chain.exec(ctx)
         assertEquals(OrderState.RUNNING, ctx.state)
         assertEquals(0, ctx.errors.size)
@@ -29,6 +31,7 @@ class ValidateSearchStringLengthTest {
     @Test
     fun shortString() = runValidationTest {
         val ctx = OrderContext(state = OrderState.RUNNING, orderFilterValidating = OrderFilter(searchString = "12"))
+        ctx.addTestPrincipal()
         chain.exec(ctx)
         assertEquals(OrderState.FAILING, ctx.state)
         assertEquals(1, ctx.errors.size)
@@ -38,6 +41,7 @@ class ValidateSearchStringLengthTest {
     @Test
     fun normalString() = runValidationTest {
         val ctx = OrderContext(state = OrderState.RUNNING, orderFilterValidating = OrderFilter(searchString = "123"))
+        ctx.addTestPrincipal()
         chain.exec(ctx)
         assertEquals(OrderState.RUNNING, ctx.state)
         assertEquals(0, ctx.errors.size)
@@ -49,6 +53,7 @@ class ValidateSearchStringLengthTest {
             state = OrderState.RUNNING,
             orderFilterValidating = OrderFilter(searchString = "12".repeat(51))
         )
+        ctx.addTestPrincipal()
         chain.exec(ctx)
         assertEquals(OrderState.FAILING, ctx.state)
         assertEquals(1, ctx.errors.size)

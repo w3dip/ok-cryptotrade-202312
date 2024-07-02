@@ -289,8 +289,6 @@ components:
         searchString:
           type: string
           description: Поисковая строка, которая будет искаться в заявках
-        userId:
-          $ref: '#/components/schemas/UserId'
         operationType:
           $ref: '#/components/schemas/OrderSide'
 
@@ -328,6 +326,7 @@ components:
         - read
         - update
         - delete
+        - search
 
     OrderResponseSingle:
       allOf:

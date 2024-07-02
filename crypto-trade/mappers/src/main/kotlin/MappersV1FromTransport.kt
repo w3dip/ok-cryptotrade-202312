@@ -94,7 +94,6 @@ fun OrderContext.fromTransport(request: OrderSearchRequest) {
 
 private fun OrderSearchFilter?.toInternal(): OrderFilter = OrderFilter(
     searchString = this?.searchString ?: "",
-    userId = this?.userId?.let { OrderUserId(it) } ?: OrderUserId.NONE,
     operationType = this?.operationType.fromTransport(),
 )
 
